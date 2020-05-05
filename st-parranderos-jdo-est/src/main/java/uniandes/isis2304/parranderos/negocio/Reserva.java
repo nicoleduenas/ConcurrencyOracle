@@ -36,7 +36,7 @@ public class Reserva implements VOReserva
 	
 	private long idAlojamiento;
 	
-	private Integer descuento;
+	private Integer personas;
 	/**
 	 * El nombre del bebedor
 	 */
@@ -65,8 +65,9 @@ public class Reserva implements VOReserva
 		this.fechaCheckIn= new Date();
 		this.fechaCheckOut= new Date();
 		this.fechaConfirmacion= new Date();
-		this.descuento= 0;
 		this.precioTotal= 0;
+		this.setPersonas(0);
+
 
 	}
 
@@ -77,13 +78,14 @@ public class Reserva implements VOReserva
 	 * @param ciudad - La ciudad del bebedor
 	 * @param presupuesto - El presupuesto del bebedor (ALTO, MEDIO, BAJO)
 	 */
-	public Reserva(long id,long idCliente,long idAloja, Date fechaConfir, Date fechaCheckOut, Date fechaCheckIn, Integer descuento, long precioTotal)
+	public Reserva(long id,long idCliente,long idAloja, Date fechaConfir, Date fechaCheckOut, Date fechaCheckIn, Integer personas, long precioTotal)
 	{
 		this.idCliente = idCliente;
 		this.idAlojamiento = idAloja;
 		this.id = id;
-		this.descuento= descuento;
 		this.precioTotal= precioTotal;
+		this.personas= personas;
+
 		this.fechaCheckIn= fechaCheckIn;
 		this.fechaCheckOut= fechaCheckOut;
 		this.fechaConfirmacion= fechaConfir;
@@ -132,34 +134,14 @@ public class Reserva implements VOReserva
 	}
 	
 
-	/**
-	 * @return El nombre del bebedor
-	 */
-	public Integer getDescuento() 
-	{
-		return descuento;
-	}
-
-	/**
-	 * @param nombre - El nuevo nombre del bebedor
-	 */
-	public void setDescuento(Integer descuento) 
-	{
-		this.descuento= descuento;
-	}
+	
 	
 	public long getPrecioTotal() 
 	{
 		return precioTotal;
 	}
 
-	/**
-	 * @param nombre - El nuevo nombre del bebedor
-	 */
-	public void setPrecioTotal(Integer descuento) 
-	{
-		this.precioTotal= precioTotal;
-	}
+
 
 	/**
 	 * @return La ciudad del bebedor
@@ -216,8 +198,18 @@ public class Reserva implements VOReserva
 	public String toString() 
 	{
 		return "Bebedor [id=" + id + ", idCliente=" + idCliente + ", idAlojamiento=" + idAlojamiento + ", precioTotal=" + precioTotal+ 
-				", descuento=" + descuento+ ", fechaCheckIn=" + fechaCheckIn + ", fechaCheckOut=" + fechaCheckOut+ "]";
+				", personas=" + personas+ ", fechaCheckIn=" + fechaCheckIn + ", fechaCheckOut=" + fechaCheckOut+ "]";
 	}
+
+	public Integer getPersonas() {
+		return personas;
+	}
+
+	public void setPersonas(Integer personas) {
+		this.personas = personas;
+	}
+
+	
 
 	/**
 	 * @return Una cadena de caracteres con la información COMPLEtA del bebedor.
