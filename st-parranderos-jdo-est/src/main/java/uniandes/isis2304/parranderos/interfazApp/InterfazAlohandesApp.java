@@ -43,7 +43,6 @@ import uniandes.isis2304.parranderos.negocio.Habitacion;
 import uniandes.isis2304.parranderos.negocio.Hostal;
 import uniandes.isis2304.parranderos.negocio.Hotel;
 import uniandes.isis2304.parranderos.negocio.Reserva;
-import uniandes.isis2304.parranderos.negocio.VOServicio;
 import uniandes.isis2304.parranderos.negocio.Proveedor;
 import uniandes.isis2304.parranderos.negocio.Propietario;
 import uniandes.isis2304.parranderos.negocio.Empresa;
@@ -57,9 +56,7 @@ import uniandes.isis2304.parranderos.negocio.VOHotel;
 import uniandes.isis2304.parranderos.negocio.VOEmpresa;
 import uniandes.isis2304.parranderos.negocio.VOProveedor;
 import uniandes.isis2304.parranderos.negocio.VOAlojamiento;
-import uniandes.isis2304.parranderos.negocio.VOReserva;
 import uniandes.isis2304.parranderos.negocio.VOCliente;
-import uniandes.isis2304.parranderos.negocio.VOViviendaUniversitaria;
 import uniandes.isis2304.parranderos.negocio.ViviendaUniversitaria;
 
 /**
