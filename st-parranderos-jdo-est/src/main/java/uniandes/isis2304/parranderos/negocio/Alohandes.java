@@ -96,19 +96,7 @@ public class Alohandes
 		return alojamiento;
 	}
 
-	/**
-	 * Elimina una Alojamiento por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Alojamiento a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarAlojamientoPorNombre (String nombre)
-	{
-		log.info ("Eliminando Alojamiento por nombre: " + nombre);
-		long resp = pp.eliminarAlojamientoPorNombre (nombre);
-		log.info ("Eliminando Alojamiento por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
+
 
 	/**
 	 * Elimina una Alojamiento por su identificador
@@ -154,18 +142,7 @@ public class Alohandes
 		return voAlojamientos;
 	}
 
-	/**
-	 * Elimina las Alojamientos que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return El n√∫mero de Alojamientos eliminadas
-	 */
-	public Alojamiento  darAlojamientosPorNombre(String nombre)
-	{
-		log.info ("Buscando Alojamiento por nombre: " + nombre);
-		List<Alojamiento> tb = pp.darAlojamientoPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
-
+	
 	public Alojamiento darAlojamientosPorId(long id)
 	{
 		log.info ("Dar informaci√≥n de un alojamiento por id: " + id);
@@ -186,27 +163,14 @@ public class Alohandes
 	 * @param ciudad - La ciudad del cliente
 	 * @return El objeto BEBEDOR adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Cliente adicionarCliente (long documento,  String nombre, String ciudad, String contrasena, String email, long telefono, String genero, String vinculacion, Date fechaNacimiento)
+	public Cliente adicionarCliente (String documento,  String nombre, String ciudad, String contrasena, String email, long telefono, String genero, String vinculacion, Date fechaNacimiento)
 	{
 		log.info ("Adicionando cliente: " + nombre);
-		Cliente cliente = pp.adicionarCliente (documento, nombre, ciudad, contrasena, email, telefono, genero, vinculacion, fechaNacimiento);
-		log.info ("Adicionando cliente: " + cliente);
+		Cliente cliente = pp.adicionarCliente(documento, nombre, email, ciudad, contrasena, genero, fechaNacimiento, vinculacion);
+				log.info ("Adicionando cliente: " + cliente);
 		return cliente;
 	}
 
-	/**
-	 * Elimina un cliente por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre del cliente a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarClientePorNombre (String nombre)
-	{
-		log.info ("Eliminando cliente por nombre: " + nombre);
-		long resp = pp.eliminarClientePorNombre (nombre);
-		log.info ("Eliminando cliente por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
 
 	/**
 	 * Elimina un cliente por su identificador
@@ -236,37 +200,9 @@ public class Alohandes
 		return cliente;
 	}
 
-	/**
-	 * Encuentra la informaci√≥n b√°sica de los clientees, seg√∫n su nombre
-	 * @param nombre - El nombre de cliente a buscar
-	 * @return Una lista de Clientees con su informaci√≥n b√°sica, donde todos tienen el nombre buscado.
-	 * 	La lista vac√≠a indica que no existen clientees con ese nombre
-	 */
-	public List<Cliente> darClientesPorNombre (String nombre)
-	{
-		log.info ("Dar informaci√≥n de clientes por nombre: " + nombre);
-		List<Cliente> clientes = pp.darClientesPorNombre (nombre);
-		log.info ("Dar informaci√≥n de Clientes por nombre: " + clientes.size() + " clientes con ese nombre existentes");
-		return clientes;
-	}
+	
 
-	/**
-	 * Encuentra la informaci√≥n b√°sica de los clientees, seg√∫n su nombre y los devuelve como VO
-	 * @param nombre - El nombre de cliente a buscar
-	 * @return Una lista de Clientees con su informaci√≥n b√°sica, donde todos tienen el nombre buscado.
-	 * 	La lista vac√≠a indica que no existen clientees con ese nombre
-	 */
-	public List<VOCliente> darVOClientePorNombre (String nombre)
-	{
-		log.info ("Generando VO de clientees por nombre: " + nombre);
-		List<VOCliente> voClientees = new LinkedList<VOCliente> ();
-		for (Cliente bdor : pp.darClienteesPorNombre (nombre))
-		{
-			voClientees.add (bdor);
-		}
-		log.info ("Generando los VO de Clientes: " + voClientees.size() + " clientees existentes");
-		return voClientees;
-	}
+	
 
 
 	public List<Cliente> darClientes ()
@@ -288,7 +224,7 @@ public class Alohandes
 		List<VOCliente> voClientes = new LinkedList<VOCliente> ();
 		for (Cliente bdor : pp.darClientes ())
 		{
-			voClientees.add (bdor);
+			voClientes.add (bdor);
 		}
 		log.info ("Generando los VO de Clientes: " + voClientes.size() + " clientes existentes");
 		return voClientes;
@@ -308,7 +244,7 @@ public class Alohandes
 	public AptoTemporada adicionarAptoTemporada (  long idAlojamiento, long idProveedor, Integer precio, String menaje, Integer habitaciones)
 	{
 		log.info ("Adicionando AptoTemporada " );
-		AptoTemporada AptoTemporada = pp.adicionarAptoTemporada (idAlojamiento, idProveedor, precio, menaje, habitaciones);
+		AptoTemporada AptoTemporada = pp.adicionarAptoTemporada(idAlojamiento, idProveedor, precio, habitaciones, menaje);
 		log.info ("Adicionando AptoTemporada: " + AptoTemporada);
 		return AptoTemporada;
 	}
@@ -379,11 +315,11 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Habitacion (Mayor que 0)
 	 * @return El objeto Habitacion adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Habitacion adicionarHabitacion ( long idAlojamiento, int precioNoche, int capacidad, String tipoOferta,  long idHotel)
+	public Habitacion adicionarHabitacion ( String id, String horario, int precioNoche, int capacidad, String tipoOferta,  long idHotel, long idAlojamiento)
 	{
 		log.info ("Adicionando Habitacion " );
-		Habitacion Habitacion = pp.adicionarHabitacion (idAlojamiento,  precioNoche, capacidad, tipoOferta, idHotel);
-		log.info ("Adicionando Habitacion: " + Habitacion);
+		Habitacion Habitacion = pp.adicionarHabitacion(id, horario, precioNoche, capacidad, tipoOferta, idAlojamiento, idHotel);
+				log.info ("Adicionando Habitacion: " + Habitacion);
 		return Habitacion;
 	}
 
@@ -444,78 +380,78 @@ public class Alohandes
 
 	
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	
-	/**
-	 * Adiciona de manera persistente una vivienda universitaria
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param amoblado 
-	 * @param nombre - El nombre la ViviendaUniversitaria
-	 * @param idServicio - El identificador del Servicio de la ViviendaUniversitaria - Debe existir un Servicio con este identificador
-	 * @param gradoAlcohol - El grado de alcohol de la ViviendaUniversitaria (Mayor que 0)
-	 * @return El objeto ViviendaUniversitaria adicionado. null si ocurre alguna Excepci√≥n
-	 */
-	public ViviendaUniversitaria adicionarViviendaUniversitaria ( long idAlojamiento,long idProveedor, Integer precioMes,char amoblado, Integer habitaciones, long telefono, String menaje, String tipoOferta)
-	{
-		log.info ("Adicionando Habitacion " );
-		ViviendaUniversitaria ViviendaUniversitaria = pp.adicionarViviendaUniversitaria (idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, menaje, tipoOferta);
-		log.info ("Adicionando ViviendaUniversitaria: " + ViviendaUniversitaria);
-		return ViviendaUniversitaria;
-	}
-
-
-	/**
-	 * Elimina una ViviendaUniversitaria por su identificador
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param idViviendaUniversitaria - El identificador de la ViviendaUniversitaria a eliminar
-	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
-	 */
-	public long eliminarViviendaUniversitariaPorId (long idViviendaUniversitaria)
-	{
-		log.info ("Eliminando ViviendaUniversitaria por id: " + idViviendaUniversitaria);
-		long resp = pp.eliminarViviendaUniversitariaPorId (idViviendaUniversitaria);
-		pp.eliminarAlojamientoPorId (idViviendaUniversitaria);
-		log.info ("Eliminando ViviendaUniversitaria por id: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Encuentra todas las ViviendaUniversitaria en Alohandes
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos ViviendaUniversitaria con todos las ViviendaUniversitarias que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<ViviendaUniversitaria> darViviendaUniversitaria ()
-	{
-		log.info ("Consultando ViviendaUniversitaria");
-		List<ViviendaUniversitaria> ViviendaUniversitaria = pp.darViviendaUniversitaria ();	
-		log.info ("Consultando ViviendaUniversitaria: " + ViviendaUniversitaria.size() + " ViviendaUniversitaria existentes");
-		return ViviendaUniversitaria;
-	}
-
-	/**
-	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos VOViviendaUniversitaria con todos las ViviendaUniversitarias que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<VOViviendaUniversitaria> darVOViviendaUniversitaria ()
-	{
-		log.info ("Generando los VO de las ViviendaUniversitaria");       
-		List<VOViviendaUniversitaria> voViviendaUniversitaria = new LinkedList<VOViviendaUniversitaria> ();
-		for (ViviendaUniversitaria beb : pp.darViviendasUniversitarias ())
-		{
-			voViviendaUniversitaria.add (beb);
-		}
-		log.info ("Generando los VO de las ViviendaUniversitaria: " + voViviendaUniversitaria.size() + " existentes");
-		return voViviendaUniversitaria;
-	}
-
-
-	public ViviendaUniversitaria darViviendaUniversitariaPorId(long id)
-	{
-		log.info ("Dar informaci√≥n de un vivienda universitaria por id: " + id);
-		ViviendaUniversitaria viviendaUniversitaria = pp.darViviendaUniversitariaPorId (id);
-		log.info ("Buscando viviendaUniversitaria por Id: " + viviendaUniversitaria!= null ? viviendaUniversitaria: "NO EXISTE");
-		return viviendaUniversitaria;
-	}
+//	
+//	/**
+//	 * Adiciona de manera persistente una vivienda universitaria
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @param amoblado 
+//	 * @param nombre - El nombre la ViviendaUniversitaria
+//	 * @param idServicio - El identificador del Servicio de la ViviendaUniversitaria - Debe existir un Servicio con este identificador
+//	 * @param gradoAlcohol - El grado de alcohol de la ViviendaUniversitaria (Mayor que 0)
+//	 * @return El objeto ViviendaUniversitaria adicionado. null si ocurre alguna Excepci√≥n
+//	 */
+//	public ViviendaUniversitaria adicionarViviendaUniversitaria ( long idAlojamiento,long idProveedor, Integer precioMes,char amoblado, Integer habitaciones, long telefono, String menaje, String tipoOferta)
+//	{
+//		log.info ("Adicionando Habitacion " );
+//		ViviendaUniversitaria ViviendaUniversitaria = pp.adicionarViviendaUniversitari
+//		log.info ("Adicionando ViviendaUniversitaria: " + ViviendaUniversitaria);
+//		return ViviendaUniversitaria;
+//	}
+//
+//
+//	/**
+//	 * Elimina una ViviendaUniversitaria por su identificador
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @param idViviendaUniversitaria - El identificador de la ViviendaUniversitaria a eliminar
+//	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
+//	 */
+//	public long eliminarViviendaUniversitariaPorId (long idViviendaUniversitaria)
+//	{
+//		log.info ("Eliminando ViviendaUniversitaria por id: " + idViviendaUniversitaria);
+//		long resp = pp.
+//				pp.eliminarAlojamientoPorId (idViviendaUniversitaria);
+//		log.info ("Eliminando ViviendaUniversitaria por id: " + resp + " tuplas eliminadas");
+//		return resp;
+//	}
+//
+//	/**
+//	 * Encuentra todas las ViviendaUniversitaria en Alohandes
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @return Una lista de objetos ViviendaUniversitaria con todos las ViviendaUniversitarias que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+//	 */
+//	public List<ViviendaUniversitaria> darViviendaUniversitaria ()
+//	{
+//		log.info ("Consultando ViviendaUniversitaria");
+//		List<ViviendaUniversitaria> ViviendaUniversitaria = pp.darViviendaUniversitaria ();	
+//		log.info ("Consultando ViviendaUniversitaria: " + ViviendaUniversitaria.size() + " ViviendaUniversitaria existentes");
+//		return ViviendaUniversitaria;
+//	}
+//
+//	/**
+//	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @return Una lista de objetos VOViviendaUniversitaria con todos las ViviendaUniversitarias que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+//	 */
+//	public List<VOViviendaUniversitaria> darVOViviendaUniversitaria ()
+//	{
+//		log.info ("Generando los VO de las ViviendaUniversitaria");       
+//		List<VOViviendaUniversitaria> voViviendaUniversitaria = new LinkedList<VOViviendaUniversitaria> ();
+//		for (ViviendaUniversitaria beb : pp.darViviendasUniversitarias ())
+//		{
+//			voViviendaUniversitaria.add (beb);
+//		}
+//		log.info ("Generando los VO de las ViviendaUniversitaria: " + voViviendaUniversitaria.size() + " existentes");
+//		return voViviendaUniversitaria;
+//	}
+//
+//
+//	public ViviendaUniversitaria darViviendaUniversitariaPorId(long id)
+//	{
+//		log.info ("Dar informaci√≥n de un vivienda universitaria por id: " + id);
+//		ViviendaUniversitaria viviendaUniversitaria = pp.darViviendaUniversitariaPorId (id);
+//		log.info ("Buscando viviendaUniversitaria por Id: " + viviendaUniversitaria!= null ? viviendaUniversitaria: "NO EXISTE");
+//		return viviendaUniversitaria;
+//	}
 
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
@@ -525,27 +461,15 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Hotel adicionarHotel (long idHotel, String nombre, String ubicacion, String email, long idProveedor, long telefono)
+	public Hotel adicionarHotel (long idHotel, String nombre, String ubicacion, String email, long idProveedor, int telefono, String horario)
 	{
 		log.info ("Adicionando Hotel " + nombre);
-		Hotel hotel = pp.adicionarHotel (idHotel, nombre, ubicacion, email, idProveedor, telefono);
+		Hotel hotel = pp.adicionarHotel(idHotel, nombre, ubicacion, horario, telefono, email, idProveedor);
 		log.info ("Adicionando Hotel: " + nombre);
 		return hotel;
 	}
 
-	/**
-	 * Elimina una Hotel por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Hotel a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarHotelPorNombre (String nombre)
-	{
-		log.info ("Eliminando Hotel por nombre: " + nombre);
-		long resp = pp.eliminarHotelPorNombre (nombre);
-		log.info ("Eliminando Hotel por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
+	
 
 	/**
 	 * Elimina una Hotel por su identificador
@@ -591,17 +515,6 @@ public class Alohandes
 		return voHoteles;
 	}
 
-	/**
-	 * Elimina las Hotels que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return El n√∫mero de Hotels eliminadas
-	 */
-	public Hotel  darHotelesPorNombre(String nombre)
-	{
-		log.info ("Buscando Hotel por nombre: " + nombre);
-		List<Hotel> tb = pp.darHotelPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
 
 	public Hotel darHotelesPorId(long id)
 	{
@@ -620,28 +533,15 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Hostal adicionarHostal (long idHostal, String nombre, String horario,String ubicacion, String email, long idProveedor, long telefono)
+	public Hostal adicionarHostal (long idHostal, String nombre, String horario,String ubicacion, String email, long idProveedor, int telefono)
 	{
 		log.info ("Adicionando Hostal " + nombre);
-		Hostal hostal = pp.adicionarHostal (idHostal, nombre, horario,email, ubicacion, idProveedor, telefono);
+		Hostal hostal = pp.adicionarHostal(idHostal, nombre, ubicacion, horario, telefono, email, idProveedor);
 		log.info ("Adicionando Hostal: " + nombre);
 		return hostal;
 	}
 
-	/**
-	 * Elimina una Hostal por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Hostal a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarHostalPorNombre (String nombre)
-	{
-		log.info ("Eliminando Hostal por nombre: " + nombre);
-		long resp = pp.eliminarHostalPorNombre (nombre);
-		log.info ("Eliminando Hostal por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
+	
 	/**
 	 * Elimina una Hostal por su identificador
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -686,17 +586,7 @@ public class Alohandes
 		return voHostales;
 	}
 
-	/**
-	 * Elimina las Hostals que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return El n√∫mero de Hostals eliminadas
-	 */
-	public Hostal  darHostalesPorNombre(String nombre)
-	{
-		log.info ("Buscando Hostal por nombre: " + nombre);
-		List<Hostal> tb = pp.darHostalPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
+
 
 	public Hostal darHostalesPorId(long id)
 	{
@@ -717,11 +607,11 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Propietario adicionarPropietario (long cedula, long idProveedor, String email, long telefono, String vinculacion)
+	public Propietario adicionarPropietario (long id, long idProveedor, String email, int telefono, String vinculacion,String nombre, String tipo)
 	{
-		log.info ("Adicionando Propietario " + cedula);
-		Propietario hostal = pp.adicionarPropietario ( cedula,  idProveedor, email, telefono, vinculacion);
-		log.info ("Adicionando Propietario: " + cedula);
+		log.info ("Adicionando Propietario " + id);
+		Propietario hostal = pp.adicionarPropietario(id, idProveedor, email, tipo, vinculacion, nombre, telefono);
+		log.info ("Adicionando Propietario: " + id);
 		return hostal;
 	}
 
@@ -860,142 +750,123 @@ public class Alohandes
 		return proveedor;
 	}
 
-	public Propietario  darProveedoresPorNombre(String nombre)
-	{
-		log.info ("Buscando Proveedor por nombre: " + nombre);
-		List<Proveedor> tb = pp.darProveedorPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
-		/**
-		 * Elimina una Propietario por su nombre
-		 * Adiciona entradas al log de la aplicaci√≥n
-		 * @param nombre - El nombre de la Propietario a eliminar
-		 * @return El n√∫mero de tuplas eliminadas
-		 */
-		public long eliminarProveedoresPorNombre (String nombre )
-		{
-			log.info ("Eliminando Proveedor por nombre: " + nombre);
-			long resp = pp.eliminarProveedorPorNombre (nombre);
-			log.info ("Eliminando Proveedor por nombre: " + resp + " tuplas eliminadas");
-			return resp;
-		}
 	
+//
+//
+//	//*****************************************************************/
+//	/**
+//	 * Adiciona de manera persistente una Alojamiento 
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @param personas 
+//	 * @param nombre - El nombre la Alojamiento
+//	 * @param idServicio - El identificador del Servicio de la Alojamiento - Debe existir un Servicio con este identificador
+//	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
+//	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
+//	 */
+//	public Reserva adicionarReserva (long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+//			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente)
+//	{
+//		log.info ("Adicionando Reserva " );
+//		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+//		log.info ("Adicionando Reserva: " + Reserva);
+//		return Reserva;
+//	}
+//
+//	/**
+//	 * Elimina una Reserva por su nombre
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @param nombre - El nombre de la Reserva a eliminar
+//	 * @return El n√∫mero de tuplas eliminadas
+//	 */
+//	public long eliminarReservaPorCliente (long idCliente)
+//	{
+//		log.info ("Eliminando Reserva por cliente: " + idCliente);
+//		long resp = pp.eliminarReservaPorCliente (idCliente);
+//		log.info ("Eliminando Reserva por cliente: " + resp + " tuplas eliminadas");
+//		return resp;
+//	}
+//
+//	/**
+//	 * Elimina una Reserva por su identificador
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @param idReserva - El identificador de la Reserva a eliminar
+//	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
+//	 */
+//	public long eliminarReservaPorId (long idReserva)
+//	{
+//		log.info ("Eliminando Reserva por id: " + idReserva);
+//		long resp = pp.eliminarReservaPorId (idReserva);
+//		log.info ("Eliminando Reserva por id: " + resp + " tuplas eliminadas");
+//		return resp;
+//	}
+//
+//	/**
+//	 * Encuentra todas las Reserva en Alohandes
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @return Una lista de objetos Reserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+//	 */
+//	public List<Reserva> darReservas ()
+//	{
+//		log.info ("Consultando Reservas");
+//		List<Reserva> Reservas = pp.darReservas ();	
+//		log.info ("Consultando Reservas: " + Reservas.size() + " Reservas existentes");
+//		return Reservas;
+//	}
+//
+//	/**
+//	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @return Una lista de objetos VOReserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+//	 */
+//	public List<VOReserva> darVOReservas ()
+//	{
+//		log.info ("Generando los VO de las Reservas");       
+//		List<VOReserva> voReservas = new LinkedList<VOReserva> ();
+//		for (Reserva beb : pp.darReservas ())
+//		{
+//			voReservas.add (beb);
+//		}
+//		log.info ("Generando los VO de las Reservas: " + voReservas.size() + " existentes");
+//		return voReservas;
+//	}
+//
+//	/**
+//	 * Elimina las Reservas que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
+//	 * Adiciona entradas al log de la aplicaci√≥n
+//	 * @return El n√∫mero de Reservas eliminadas
+//	 */
+//	public Reserva  darReservasPorCliente(long cliente)
+//	{
+//		log.info ("Buscando Reserva por cliente: " + cliente);
+//		List<Reserva> tb = pp.darReservaPorCliente (cliente);
+//		return !tb.isEmpty () ? tb.get (0) : null;
+//	}
+//
+//	public Reserva darReservasPorId(long id)
+//	{
+//		log.info ("Dar informaci√≥n de un proveedor por id: " + id);
+//		Reserva reserva = pp.darReservaPorId (id);
+//		log.info ("Buscando reserva por Id: " + reserva != null ? reserva : "NO EXISTE");
+//		return reserva;
+//	}
+//
+
 
 
 	//*****************************************************************/
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param personas 
 	 * @param nombre - El nombre la Alojamiento
 	 * @param idServicio - El identificador del Servicio de la Alojamiento - Debe existir un Servicio con este identificador
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Reserva adicionarReserva (long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
-			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente)
+	public Empresa adicionarEmpresa (long id,  String nombre, String email, long idProveedor, char registrado)
 	{
-		log.info ("Adicionando Reserva " );
-		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
-		log.info ("Adicionando Reserva: " + Reserva);
-		return Reserva;
-	}
-
-	/**
-	 * Elimina una Reserva por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Reserva a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarReservaPorCliente (long idCliente)
-	{
-		log.info ("Eliminando Reserva por cliente: " + idCliente);
-		long resp = pp.eliminarReservaPorCliente (idCliente);
-		log.info ("Eliminando Reserva por cliente: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Elimina una Reserva por su identificador
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param idReserva - El identificador de la Reserva a eliminar
-	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
-	 */
-	public long eliminarReservaPorId (long idReserva)
-	{
-		log.info ("Eliminando Reserva por id: " + idReserva);
-		long resp = pp.eliminarReservaPorId (idReserva);
-		log.info ("Eliminando Reserva por id: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Encuentra todas las Reserva en Alohandes
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos Reserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<Reserva> darReservas ()
-	{
-		log.info ("Consultando Reservas");
-		List<Reserva> Reservas = pp.darReservas ();	
-		log.info ("Consultando Reservas: " + Reservas.size() + " Reservas existentes");
-		return Reservas;
-	}
-
-	/**
-	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos VOReserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<VOReserva> darVOReservas ()
-	{
-		log.info ("Generando los VO de las Reservas");       
-		List<VOReserva> voReservas = new LinkedList<VOReserva> ();
-		for (Reserva beb : pp.darReservas ())
-		{
-			voReservas.add (beb);
-		}
-		log.info ("Generando los VO de las Reservas: " + voReservas.size() + " existentes");
-		return voReservas;
-	}
-
-	/**
-	 * Elimina las Reservas que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return El n√∫mero de Reservas eliminadas
-	 */
-	public Reserva  darReservasPorCliente(long cliente)
-	{
-		log.info ("Buscando Reserva por cliente: " + cliente);
-		List<Reserva> tb = pp.darReservaPorCliente (cliente);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
-
-	public Reserva darReservasPorId(long id)
-	{
-		log.info ("Dar informaci√≥n de un proveedor por id: " + id);
-		Reserva reserva = pp.darReservaPorId (id);
-		log.info ("Buscando reserva por Id: " + reserva != null ? reserva : "NO EXISTE");
-		return reserva;
-	}
-
-
-
-
-	//*****************************************************************/
-	/**
-	 * Adiciona de manera persistente una Alojamiento 
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre la Alojamiento
-	 * @param idServicio - El identificador del Servicio de la Alojamiento - Debe existir un Servicio con este identificador
-	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
-	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
-	 */
-	public Empresa adicionarEmpresa (long nit,  String correo, long idProveedor, char registrado)
-	{
-		log.info ("Adicionando Empresa " + nit);
-		Empresa empresa = pp.adicionarEmpresa (nit,  correo,idProveedor,registrado);
-		log.info ("Adicionando Empresa: " + nit);
+		log.info ("Adicionando Empresa " + id);
+		Empresa empresa = pp.adicionarEmpresa(id, nombre, email, idProveedor, registrado);
+		log.info ("Adicionando Empresa: " + id);
 		return empresa;
 	}
 

@@ -27,31 +27,33 @@ public class AptoTemporada extends Alojamiento implements VOAptoTemporada
 	 ***********************/
 
 
-	private String ubicacion;
+
+
+	private long idAlojamiento;
+
+
+	private long idProveedor;
 
 	public AptoTemporada() 
 	{
-		this.id = 0;
-		this.setPrecio(0);
-		this.habitaciones = 0;
-
+		this.idAlojamiento = 0;
+		this.idProveedor=0;
+		this.precio = 0;
 		this.menaje = "";
-		this.ubicacion = "";
-
-		this.tipoOferta = "";
+		this.habitaciones = 0;
 	}
 
 	/**
 	 * Constructor con valores
-	 * @param precioTemporada 
+	 * @param menaje2 
 	 */
-	public AptoTemporada(long id, Integer habitaciones, String menaje,  String tipoOferta, Integer precioTemporada) 
+	public AptoTemporada(long idAlojamiento, long idProveedor, int precio, int habitaciones, String menaje) 
 	{
-		this.id = id;
-		this.precioTemporada=precioTemporada;
-		this.habitaciones = habitaciones;
+		this.idAlojamiento = idAlojamiento;
+		this.idProveedor=idProveedor;
+		this.precio = precio;
 		this.menaje = menaje;
-		this.tipoOferta = tipoOferta;
+		this.habitaciones = habitaciones;
 	}
 
 	public String getTipoOferta() 

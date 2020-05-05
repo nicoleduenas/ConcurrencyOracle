@@ -259,21 +259,21 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     {
     	try 
     	{
-			long cedula = Long.parseLong(JOptionPane.showInputDialog (this, "Cedula", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE));
+			String documento = (JOptionPane.showInputDialog (this, "Cedula", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE));
 			String nombre = JOptionPane.showInputDialog (this, "Nombre", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE);
 			String genero = JOptionPane.showInputDialog (this, "Tipo", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE);
 			String email = JOptionPane.showInputDialog (this, "email", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE);
 			String vinculacion= JOptionPane.showInputDialog (this, "vinculacion", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE);
 			String contrasena = JOptionPane.showInputDialog (this, "contraseña", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE);
 			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-			Date fechaN = formato.parse(JOptionPane.showInputDialog (this, "fecha Nacimiento", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE));
+			Date fechaNacimiento = formato.parse(JOptionPane.showInputDialog (this, "fecha Nacimiento", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE));
 			String ciudad= JOptionPane.showInputDialog (this, "ciudad", "Adicionar Cliente", JOptionPane.QUESTION_MESSAGE);
 			long telefono= Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar cliente", JOptionPane.QUESTION_MESSAGE));
 
 
-    		if (nombre != null &!nombre.equals("")&fechaN!= null& vinculacion!= null)
+    		if (nombre != null &!nombre.equals("")&fechaNacimiento!= null& vinculacion!= null)
     		{
-        		VOCliente tb = (VOCliente) alohandes.adicionarCliente(cedula, nombre, ciudad, contrasena, email, telefono, genero, vinculacion, fechaN);
+        		VOCliente tb = (VOCliente) alohandes.adicionarCliente(documento, nombre, ciudad, contrasena, email, telefono, genero, vinculacion, fechaNacimiento);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear un cliente con nombre: " + nombre);
@@ -350,41 +350,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 		}
     }
 
-    /**
-     * Busca el cliente con el nombre indicado por el cliente y lo muestra en el panel de datos
-     */
-    public void buscarClientePorNombre( )
-    {
-    	try 
-    	{
-    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del cliente?", "Buscar cliente por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombreTb != null)
-    		{
-    			VOCliente cliente = (VOCliente) alohandes.darClientesPorNombre (nombreTb);
-    			String resultado = "En buscar cliente por nombre\n\n";
-    			if (cliente != null)
-    			{
-        			resultado += "El cliente es: " + cliente;
-    			}
-    			else
-    			{
-        			resultado += "Un cliente con nombre: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el cliente");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+  
     
     
     /**
@@ -423,37 +389,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 		}
     }
     
-    /**
-     * Borra de la base de datos el cliente con el nombre dado po el cliente
-     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarClientePorNombre( )
-    {
-    	try 
-    	{
-    		String nombre = JOptionPane.showInputDialog (this, "nombre del cliente?", "Borrar cliente por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombre != null)
-    		{
-//    			long idTipo = Long.valueOf (nombre);
-    			long tbEliminados = alohandes.eliminarClientePorNombre(nombre);
-
-    			String resultado = "En eliminar Cliente\n\n";
-    			resultado += tbEliminados + " clientes eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el cliente");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+  
     
     //
     //
@@ -661,16 +597,18 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     {
     	try 
     	{
+			long id= Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 			long idHotel= Long.parseLong(JOptionPane.showInputDialog (this, "idHotel", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 			long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, " idAlojamiento", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 			Integer precioNoche = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 			Integer capacidad = Integer.parseInt(JOptionPane.showInputDialog (this, "capacidad", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 			String tipoOferta = (JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
+			String horario = (JOptionPane.showInputDialog (this, "horario", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 
 			
-    		if (idHotel > 0 &idAlojamiento > 0&precioNoche> 0&capacidad> 0)
+    		if (id > 0 &idAlojamiento > 0&precioNoche> 0&capacidad> 0)
     		{
-    			VOHabitacion tb = (VOHabitacion) alohandes.adicionarHabitacion(idAlojamiento,  precioNoche, capacidad, tipoOferta, idHotel);
+    			VOHabitacion tb = (VOHabitacion) alohandes.adicionarHabitacion(horario, horario, precioNoche, capacidad, tipoOferta, idHotel, idAlojamiento);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear un Habitacion con nit: " + idAlojamiento);
@@ -835,20 +773,21 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     {
     	try 
     	{
-			long nit = Long.parseLong(JOptionPane.showInputDialog (this, "nit", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
+			long idHostal = Long.parseLong(JOptionPane.showInputDialog (this, "nit", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
+
 			String nombre = (JOptionPane.showInputDialog (this, "nombre", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
 			String horario = (JOptionPane.showInputDialog (this, "horario", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
 			String email = (JOptionPane.showInputDialog (this, "email", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
 			String ubicacion = (JOptionPane.showInputDialog (this, "ubicacion", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
-			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
+			int telefono = (int) Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Hostal", JOptionPane.QUESTION_MESSAGE));
 
-    		if (nit >0 & nombre!= null &!nombre.equals("") & !horario.equals("")& idProveedor>0)
+    		if (idHostal >0 & nombre!= null &!nombre.equals("") & !horario.equals("")& idProveedor>0)
     		{
-        		VOHostal tb = (VOHostal) alohandes.adicionarHostal(nit, nombre, horario,email, ubicacion, idProveedor, telefono);
+        		VOHostal tb = (VOHostal) alohandes.adicionarHostal(idHostal, nombre, horario, ubicacion, email, idProveedor, telefono);
         		if (tb == null)
         		{
-        			throw new Exception ("No se pudo crear un Hostal con nit: " + nit);
+        			throw new Exception ("No se pudo crear un Hostal con nit: " + idHostal);
         		}
         		String resultado = "En adicionarHostal\n\n";
         		resultado += "Hostal adicionado exitosamente: " + tb;
@@ -1001,12 +940,14 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 			String nombre = (JOptionPane.showInputDialog (this, "nombre", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
 			String email = (JOptionPane.showInputDialog (this, "email", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
 			String ubicacion = (JOptionPane.showInputDialog (this, "ubicacion", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
+			String horario = (JOptionPane.showInputDialog (this, "horario", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
+
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
-			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
+			int telefono = (int)Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Hotel", JOptionPane.QUESTION_MESSAGE));
 
     		if (nit >0 & nombre!= null &!nombre.equals("") & idProveedor>0)
     		{
-        		VOHotel tb = (VOHotel) alohandes.adicionarHotel(nit, nombre, ubicacion, email, idProveedor, telefono);
+        		VOHotel tb = (VOHotel) alohandes.adicionarHotel(nit, nombre, ubicacion, email, idProveedor, telefono, horario);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear un c con nit: " + nit);
@@ -1280,71 +1221,71 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 		}
     }
     
-    public void buscarAlojamientoPorNombre( )
-    {
-    	try 
-    	{
-    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del propietario?", "Buscar alojamiento por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombreTb != null)
-    		{
-    			VOAlojamiento alojamiento = (VOAlojamiento) alohandes.darAlojamientosPorNombre (nombreTb);
-    			String resultado = "En buscar alojamiento por nombre\n\n";
-    			if (alojamiento != null)
-    			{
-        			resultado += "El alojamiento es: " + alojamiento;
-    			}
-    			else
-    			{
-        			resultado += "Un alojamiento con nombre: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el alojamiento");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+//    public void buscarAlojamientoPorNombre( )
+//    {
+//    	try 
+//    	{
+//    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del propietario?", "Buscar alojamiento por nombre", JOptionPane.QUESTION_MESSAGE);
+//    		if (nombreTb != null)
+//    		{
+//    			VOAlojamiento alojamiento = (VOAlojamiento) alohandes.darAlojamientosPorNombre (nombreTb);
+//    			String resultado = "En buscar alojamiento por nombre\n\n";
+//    			if (alojamiento != null)
+//    			{
+//        			resultado += "El alojamiento es: " + alojamiento;
+//    			}
+//    			else
+//    			{
+//        			resultado += "Un alojamiento con nombre: " + nombreTb + " NO EXISTE\n";
+//    			}
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el alojamiento");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
     
-    /**
-     * Borra de la base de datos el cliente con el nombre dado po el cliente
-     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarAlojamientoPorNombre( )
-    {
-    	try 
-    	{
-    		String nombre = JOptionPane.showInputDialog (this, "nombre del alojamiento?", "Borrar alojamiento por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombre != null)
-    		{
-//    			long idTipo = Long.valueOf (nombre);
-    			long tbEliminados = alohandes.eliminarAlojamientoPorNombre(nombre);
-
-    			String resultado = "En eliminar Alojamiento\n\n";
-    			resultado += tbEliminados + " alojamientos eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el alojamiento");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
+//    /**
+//     * Borra de la base de datos el cliente con el nombre dado po el cliente
+//     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
+//     */
+//    public void eliminarAlojamientoPorNombre( )
+//    {
+//    	try 
+//    	{
+//    		String nombre = JOptionPane.showInputDialog (this, "nombre del alojamiento?", "Borrar alojamiento por nombre", JOptionPane.QUESTION_MESSAGE);
+//    		if (nombre != null)
+//    		{
+////    			long idTipo = Long.valueOf (nombre);
+//    			long tbEliminados = alohandes.eliminarAlojamientoPorNombre(nombre);
+//
+//    			String resultado = "En eliminar Alojamiento\n\n";
+//    			resultado += tbEliminados + " alojamientos eliminados\n";
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el alojamiento");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//    
     //
     //
     //
@@ -1376,139 +1317,139 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     /* ****************************************************************
 	 * 			CRUD de ViviendaUniversitaria
 	 *****************************************************************/
-    /**
-     * Adiciona un tipo de usuario con la información dada por el usuario
-     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
-     */
-    public void adicionarViviendaUniversitaria( )
-    {
-    	try 
-    	{
-    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
-			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
-			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
-			Integer precioMes = Integer.parseInt(JOptionPane.showInputDialog (this, "precio mes", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
-			char amoblado = JOptionPane.showInputDialog (this, "amoblado??", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE).charAt(0);
-			Integer habitaciones = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
-			String tipoOferta = JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE);
-			String menaje = JOptionPane.showInputDialog (this, "menaje", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE);
-
-
-    		if (idAlojamiento > 0 & amoblado==('1')|amoblado==('0')&idProveedor > 0 )
-    		{
-        		VOViviendaUniversitaria tb = (VOViviendaUniversitaria)alohandes.adicionarViviendaUniversitaria(idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, menaje, tipoOferta);
-        		if (tb == null)
-        		{
-        			throw new Exception ("No se pudo crear un viviendaUniversitaria con id de alojamiento: " + idAlojamiento);
-        		}
-        		String resultado = "En adicionarViviendaUniversitaria\n\n";
-        		resultado += "ViviendaUniversitaria adicionado exitosamente: " + tb;
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
-     */
-    public void listarViviendaUniversitaria( )
-    {
-    	try 
-    	{
-			List<ViviendaUniversitaria> lista = alohandes.darViviendaUniversitaria();
-
-			String resultado = "En listarViviendaUniversitaria";
-			resultado +=  "\n" + listarViviendaUniversitaria (lista);
-			panelDatos.actualizarInterfaz(resultado);
-			resultado += "\n Operación terminada";
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
-     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarViviendaUniversitariaPorId( )
-    {
-    	try 
-    	{
-    		String idTipoStr = JOptionPane.showInputDialog (this, "Id del viviendaUniversitaria?", "Borrar viviendaUniversitaria por Id", JOptionPane.QUESTION_MESSAGE);
-    		if (idTipoStr != null)
-    		{
-    			long idTipo = Long.valueOf (idTipoStr);
-    			long tbEliminados = alohandes.eliminarViviendaUniversitariaPorId(idTipo);
-
-    			String resultado = "En eliminar viviendaUniversitaria\n\n";
-    			resultado += tbEliminados + " viviendaUniversitaria eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
-    
-    /**
-     * Busca el usuario con el id indicado por el usuario y lo muestra en el panel de datos
-     */
-    public void buscarViviendaUniversitariaPorId( )
-    {
-    	try 
-    	{
-    		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id del viviendaUniversitaria?", "Buscar viviendaUniversitaria por Id", JOptionPane.QUESTION_MESSAGE));
-    		if (Id > 0)
-    		{
-    			VOViviendaUniversitaria viviendaUniversitaria = (VOViviendaUniversitaria) alohandes.darViviendaUniversitariaPorId(Id);
-    			String resultado = "En buscar viviendaUniversitaria por id\n\n";
-    			if (viviendaUniversitaria != null)
-    			{
-        			resultado += "El viviendaUniversitaria es: " + viviendaUniversitaria;
-    			}
-    			else
-    			{
-        			resultado += "Un viviendaUniversitaria con Id: " + Id + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+//    /**
+//     * Adiciona un tipo de usuario con la información dada por el usuario
+//     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
+//     */
+//    public void adicionarViviendaUniversitaria( )
+//    {
+//    	try 
+//    	{
+//    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
+//			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
+//			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
+//			Integer precioMes = Integer.parseInt(JOptionPane.showInputDialog (this, "precio mes", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
+//			char amoblado = JOptionPane.showInputDialog (this, "amoblado??", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE).charAt(0);
+//			Integer habitaciones = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
+//			String tipoOferta = JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE);
+//			String menaje = JOptionPane.showInputDialog (this, "menaje", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE);
+//
+//
+//    		if (idAlojamiento > 0 & amoblado==('1')|amoblado==('0')&idProveedor > 0 )
+//    		{
+//        		VOViviendaUniversitaria tb = (VOViviendaUniversitaria)alohandes.adicionarViviendaUniversitari
+//        		if (tb == null)
+//        		{
+//        			throw new Exception ("No se pudo crear un viviendaUniversitaria con id de alojamiento: " + idAlojamiento);
+//        		}
+//        		String resultado = "En adicionarViviendaUniversitaria\n\n";
+//        		resultado += "ViviendaUniversitaria adicionado exitosamente: " + tb;
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//
+//    /**
+//     * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
+//     */
+//    public void listarViviendaUniversitaria( )
+//    {
+//    	try 
+//    	{
+//			List<ViviendaUniversitaria> lista = alohandes.darViviendaUniversitaria();
+//
+//			String resultado = "En listarViviendaUniversitaria";
+//			resultado +=  "\n" + listarViviendaUniversitaria (lista);
+//			panelDatos.actualizarInterfaz(resultado);
+//			resultado += "\n Operación terminada";
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//
+//    /**
+//     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
+//     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
+//     */
+//    public void eliminarViviendaUniversitariaPorId( )
+//    {
+//    	try 
+//    	{
+//    		String idTipoStr = JOptionPane.showInputDialog (this, "Id del viviendaUniversitaria?", "Borrar viviendaUniversitaria por Id", JOptionPane.QUESTION_MESSAGE);
+//    		if (idTipoStr != null)
+//    		{
+//    			long idTipo = Long.valueOf (idTipoStr);
+//    			long tbEliminados = alohandes.eliminarViviendaUniversitariaPorId(idTipo);
+//
+//    			String resultado = "En eliminar viviendaUniversitaria\n\n";
+//    			resultado += tbEliminados + " viviendaUniversitaria eliminados\n";
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//    
+//    
+//    /**
+//     * Busca el usuario con el id indicado por el usuario y lo muestra en el panel de datos
+//     */
+//    public void buscarViviendaUniversitariaPorId( )
+//    {
+//    	try 
+//    	{
+//    		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id del viviendaUniversitaria?", "Buscar viviendaUniversitaria por Id", JOptionPane.QUESTION_MESSAGE));
+//    		if (Id > 0)
+//    		{
+//    			VOViviendaUniversitaria viviendaUniversitaria = (VOViviendaUniversitaria) alohandes.darViviendaUniversitariaPorId(Id);
+//    			String resultado = "En buscar viviendaUniversitaria por id\n\n";
+//    			if (viviendaUniversitaria != null)
+//    			{
+//        			resultado += "El viviendaUniversitaria es: " + viviendaUniversitaria;
+//    			}
+//    			else
+//    			{
+//        			resultado += "Un viviendaUniversitaria con Id: " + Id + " NO EXISTE\n";
+//    			}
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
     
     //
     //
@@ -1549,16 +1490,20 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     {
     	try 
     	{
+			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
+    		String nombre = JOptionPane.showInputDialog (this, "nombre", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
+    		String tipo = JOptionPane.showInputDialog (this, "tipo", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
+
     		String email = JOptionPane.showInputDialog (this, "email", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
 			String vinculacion= JOptionPane.showInputDialog (this, "vinculacion", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
 			long cedula = Long.parseLong(JOptionPane.showInputDialog (this, "documento", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
-			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
+			int telefono =(int) Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
 
 
 			if (cedula>0&idProveedor >0& vinculacion!= null)
     		{
-        		VOPropietario tb = (VOPropietario) alohandes.adicionarPropietario(cedula, idProveedor, email, telefono, vinculacion);
+        		VOPropietario tb = (VOPropietario) alohandes.adicionarPropietario(id, idProveedor, email, telefono, vinculacion, nombre, tipo);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear una persona natural con operador: " + cedula);
@@ -1705,209 +1650,209 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     /* ****************************************************************
 	 * 			CRUD de Reserva
 	 *****************************************************************/
-    /**
-     * Adiciona un tipo de usuario con la información dada por el usuario
-     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
-     */
-    public void adicionarReserva( )
-    {
-    	try 
-    	{
-			Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			Timestamp fechaConfirmacion = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de confirmacion", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			Integer cantPagos = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			Integer descuento = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			long idCliente = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			Integer precioTotal = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			Integer personas = Integer.parseInt(JOptionPane.showInputDialog (this, "personas", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-
-			
-    		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
-    		{
-        		VOReserva tb = (VOReserva) alohandes.adicionarReserva(id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
-        		if (tb == null)
-        		{
-        			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
-        		}
-        		String resultado = "En adicionarReserva\n\n";
-        		resultado += "Reserva adicionada exitosamente: " + tb;
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
-     */
-    public void listarReservas( )
-    {
-    	try 
-    	{
-			List <Reserva> lista = alohandes.darReservas();
-
-			String resultado = "En listarReserva";
-			resultado +=  "\n" + listarReserva (lista);
-			panelDatos.actualizarInterfaz(resultado);
-			resultado += "\n Operación terminada";
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
-     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarReservaPorId( )
-    {
-    	try 
-    	{
-    		String idTipoStr = JOptionPane.showInputDialog (this, "Id de la reserva?", "Borrar reserva por Id", JOptionPane.QUESTION_MESSAGE);
-    		if (idTipoStr != null)
-    		{
-    			long idTipo = Long.valueOf (idTipoStr);
-    			long tbEliminados = alohandes.eliminarReservaPorId(idTipo);
-
-    			String resultado = "En eliminar Reserva\n\n";
-    			resultado += tbEliminados + " Reserva eliminadas\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Busca el usuario con el nombre indicado por el usuario y lo muestra en el panel de datos
-     */
-    public void buscarReservaPorCliente( )
-    {
-    	try 
-    	{
-    		Long nombreTb = Long.parseLong(JOptionPane.showInputDialog (this, "id del de la reserva?", "Buscar reserva por usuario", JOptionPane.QUESTION_MESSAGE));
-    		if (nombreTb > 0)
-    		{
-    			VOReserva reserva = (VOReserva) alohandes.darReservasPorCliente(nombreTb);
-    			String resultado = "En buscar reserva por cliente\n\n";
-    			if (reserva != null)
-    			{
-        			resultado += "La reserva es: " + reserva;
-    			}
-    			else
-    			{
-        			resultado += "Una reserva con cliente: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+//    /**
+//     * Adiciona un tipo de usuario con la información dada por el usuario
+//     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
+//     */
+//    public void adicionarReserva( )
+//    {
+//    	try 
+//    	{
+//			Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			Timestamp fechaConfirmacion = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de confirmacion", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			Integer cantPagos = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			Integer descuento = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			long idCliente = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			Integer precioTotal = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//			Integer personas = Integer.parseInt(JOptionPane.showInputDialog (this, "personas", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+//
+//			
+//    		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
+//    		{
+//        		VOReserva tb = (VOReserva) alohandes.adicionarReserv
+//        		if (tb == null)
+//        		{
+//        			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
+//        		}
+//        		String resultado = "En adicionarReserva\n\n";
+//        		resultado += "Reserva adicionada exitosamente: " + tb;
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//
+//    /**
+//     * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
+//     */
+//    public void listarReservas( )
+//    {
+//    	try 
+//    	{
+//			List <Reserva> lista = alohandes.darReservas();
+//
+//			String resultado = "En listarReserva";
+//			resultado +=  "\n" + listarReserva (lista);
+//			panelDatos.actualizarInterfaz(resultado);
+//			resultado += "\n Operación terminada";
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//
+//    /**
+//     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
+//     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
+//     */
+//    public void eliminarReservaPorId( )
+//    {
+//    	try 
+//    	{
+//    		String idTipoStr = JOptionPane.showInputDialog (this, "Id de la reserva?", "Borrar reserva por Id", JOptionPane.QUESTION_MESSAGE);
+//    		if (idTipoStr != null)
+//    		{
+//    			long idTipo = Long.valueOf (idTipoStr);
+//    			long tbEliminados = alohandes.eliminarReservaPorId(idTipo);
+//
+//    			String resultado = "En eliminar Reserva\n\n";
+//    			resultado += tbEliminados + " Reserva eliminadas\n";
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//
+//    /**
+//     * Busca el usuario con el nombre indicado por el usuario y lo muestra en el panel de datos
+//     */
+//    public void buscarReservaPorCliente( )
+//    {
+//    	try 
+//    	{
+//    		Long nombreTb = Long.parseLong(JOptionPane.showInputDialog (this, "id del de la reserva?", "Buscar reserva por usuario", JOptionPane.QUESTION_MESSAGE));
+//    		if (nombreTb > 0)
+//    		{
+//    			VOReserva reserva = (VOReserva) alohandes.darReservasPorCliente(nombreTb);
+//    			String resultado = "En buscar reserva por cliente\n\n";
+//    			if (reserva != null)
+//    			{
+//        			resultado += "La reserva es: " + reserva;
+//    			}
+//    			else
+//    			{
+//        			resultado += "Una reserva con cliente: " + nombreTb + " NO EXISTE\n";
+//    			}
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
     
-    
-    /**
-     * Busca el usuario con el id indicado por el usuario y lo muestra en el panel de datos
-     */
-    public void buscarReservaPorId( )
-    {
-    	try 
-    	{
-    		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id de la reserva?", "Buscar reserva por Id", JOptionPane.QUESTION_MESSAGE));
-    		if (Id > 0)
-    		{
-    			VOReserva reserva = (VOReserva) alohandes.darReservasPorId(Id);
-    			String resultado = "En buscar reserva por id\n\n";
-    			if (reserva != null)
-    			{
-        			resultado += "La reserva es: " + reserva;
-    			}
-    			else
-    			{
-        			resultado += "Un usuario con Id: " + Id + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
-    /**
-     * Borra de la base de datos el usuario con el nombre dado po el usuario
-     * Cuando dicho usuario no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarReservaPorCliente( )
-    {
-    	try 
-    	{
-    		String cliente = JOptionPane.showInputDialog (this, "id del cliente de la reserva?", "Borrar reserva por cliente", JOptionPane.QUESTION_MESSAGE);
-    		if (cliente != null)
-    		{
-    			long idTipo = Long.valueOf (cliente);
-    			long tbEliminados = alohandes.eliminarReservaPorCliente(idTipo);
-
-    			String resultado = "En eliminar Reserva\n\n";
-    			resultado += tbEliminados + " reservas eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+//    
+//    /**
+//     * Busca el usuario con el id indicado por el usuario y lo muestra en el panel de datos
+//     */
+//    public void buscarReservaPorId( )
+//    {
+//    	try 
+//    	{
+//    		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id de la reserva?", "Buscar reserva por Id", JOptionPane.QUESTION_MESSAGE));
+//    		if (Id > 0)
+//    		{
+//    			VOReserva reserva = (VOReserva) alohandes.darReservasPorId(Id);
+//    			String resultado = "En buscar reserva por id\n\n";
+//    			if (reserva != null)
+//    			{
+//        			resultado += "La reserva es: " + reserva;
+//    			}
+//    			else
+//    			{
+//        			resultado += "Un usuario con Id: " + Id + " NO EXISTE\n";
+//    			}
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
+//    
+//    /**
+//     * Borra de la base de datos el usuario con el nombre dado po el usuario
+//     * Cuando dicho usuario no existe, se indica que se borraron 0 registros de la base de datos
+//     */
+//    public void eliminarReservaPorCliente( )
+//    {
+//    	try 
+//    	{
+//    		String cliente = JOptionPane.showInputDialog (this, "id del cliente de la reserva?", "Borrar reserva por cliente", JOptionPane.QUESTION_MESSAGE);
+//    		if (cliente != null)
+//    		{
+//    			long idTipo = Long.valueOf (cliente);
+//    			long tbEliminados = alohandes.eliminarReservaPorCliente(idTipo);
+//
+//    			String resultado = "En eliminar Reserva\n\n";
+//    			resultado += tbEliminados + " reservas eliminados\n";
+//    			resultado += "\n Operación terminada";
+//    			panelDatos.actualizarInterfaz(resultado);
+//    		}
+//    		else
+//    		{
+//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+//    		}
+//		} 
+//    	catch (Exception e) 
+//    	{
+////			e.printStackTrace();
+//			String resultado = generarMensajeError(e);
+//			panelDatos.actualizarInterfaz(resultado);
+//		}
+//    }
     
     //
     //
@@ -1952,10 +1897,11 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 			String email = (JOptionPane.showInputDialog (this, "email", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
 			char registrado = JOptionPane.showInputDialog (this,"está registrada?", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE).charAt(0);
+			String nombre = (JOptionPane.showInputDialog (this, "nombre", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
 
     		if (nit >0 & registrado==('1')|registrado==('0')&& idProveedor>0)
     		{
-        		VOEmpresa tb = (VOEmpresa)alohandes.adicionarEmpresa(nit,  email,idProveedor,registrado);
+        		VOEmpresa tb = (VOEmpresa)alohandes.adicionarEmpresa(nit, nombre, email, idProveedor, registrado);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear una empresa con operador: " + idProveedor);
@@ -2222,70 +2168,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     }
     
     
-    /**
-     * Borra de la base de datos el cliente con el nombre dado po el cliente
-     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarProveedorPorNombre( )
-    {
-    	try 
-    	{
-    		String nombre = JOptionPane.showInputDialog (this, "nombre del proveedor?", "Borrar proveedor por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombre != null)
-    		{
-//    			long idTipo = Long.valueOf (nombre);
-    			long tbEliminados = alohandes.eliminarProveedoresPorNombre(nombre);
-
-    			String resultado = "En eliminar Proveedor\n\n";
-    			resultado += tbEliminados + " proveedors eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el proveedor");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
-    public void buscarProveedorPorNombre( )
-    {
-    	try 
-    	{
-    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del proveedor?", "Buscar proveedor por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombreTb != null)
-    		{
-    			VOProveedor proveedor = (VOProveedor) alohandes.darProveedoresPorNombre (nombreTb);
-    			String resultado = "En buscar proveedor por nombre\n\n";
-    			if (proveedor != null)
-    			{
-        			resultado += "El proveedor es: " + proveedor;
-    			}
-    			else
-    			{
-        			resultado += "Un proveedor con nombre: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el propietario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+   
     
     
 
