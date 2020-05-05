@@ -38,14 +38,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import uniandes.isis2304.parranderos.negocio.Alohandes;
-import uniandes.isis2304.parranderos.negocio.AptoSemestre;
 import uniandes.isis2304.parranderos.negocio.Cliente;
-import uniandes.isis2304.parranderos.negocio.HotelHabitacion;
-import uniandes.isis2304.parranderos.negocio.HostalHabitacion;
+import uniandes.isis2304.parranderos.negocio.Habitacion;
 import uniandes.isis2304.parranderos.negocio.Hostal;
 import uniandes.isis2304.parranderos.negocio.Hotel;
 import uniandes.isis2304.parranderos.negocio.Reserva;
-import uniandes.isis2304.parranderos.negocio.Servicio;
 import uniandes.isis2304.parranderos.negocio.VOServicio;
 import uniandes.isis2304.parranderos.negocio.Proveedor;
 import uniandes.isis2304.parranderos.negocio.Propietario;
@@ -53,9 +50,8 @@ import uniandes.isis2304.parranderos.negocio.Empresa;
 import uniandes.isis2304.parranderos.negocio.Alojamiento;
 import uniandes.isis2304.parranderos.negocio.AptoTemporada;
 import uniandes.isis2304.parranderos.negocio.VOAptoTemporada;
-import uniandes.isis2304.parranderos.negocio.VOHotelHabitacion;
+import uniandes.isis2304.parranderos.negocio.VOHabitacion;
 import uniandes.isis2304.parranderos.negocio.VOPropietario;
-import uniandes.isis2304.parranderos.negocio.VOHostalHabitacion;
 import uniandes.isis2304.parranderos.negocio.VOHostal;
 import uniandes.isis2304.parranderos.negocio.VOHotel;
 import uniandes.isis2304.parranderos.negocio.VOEmpresa;
@@ -63,9 +59,7 @@ import uniandes.isis2304.parranderos.negocio.VOProveedor;
 import uniandes.isis2304.parranderos.negocio.VOAlojamiento;
 import uniandes.isis2304.parranderos.negocio.VOReserva;
 import uniandes.isis2304.parranderos.negocio.VOCliente;
-import uniandes.isis2304.parranderos.negocio.VOAptoSemestre;
 import uniandes.isis2304.parranderos.negocio.VOViviendaUniversitaria;
-import uniandes.isis2304.parranderos.negocio.AptoSemestre;
 import uniandes.isis2304.parranderos.negocio.ViviendaUniversitaria;
 
 /**
@@ -626,206 +620,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     
     
     
-    
-    /* ****************************************************************
-	 * 			CRUD de Servicio
-	 *****************************************************************/
-    /**
-     * Adiciona un tipo de usuario con la información dada por el usuario
-     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
-     */
-    public void adicionarServicio( )
-    {
-    	try 
-    	{
-			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Servicio", JOptionPane.QUESTION_MESSAGE));
-			String nombre = JOptionPane.showInputDialog (this, "nombre", "Adicionar Servicio", JOptionPane.QUESTION_MESSAGE);
-			long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Servicio", JOptionPane.QUESTION_MESSAGE));
-
-
-    		if (id > 0 &idAlojamiento > 0)
-    		{
-        		VOServicio tb = alohandes.adicionarServicio(id, idAlojamiento, nombre);
-        		if (tb == null)
-        		{
-        			throw new Exception ("No se pudo crear un servicio con id: " + id);
-        		}
-        		String resultado = "En adicionarMonto\n\n";
-        		resultado += "monto adicionado exitosamente: " + tb;
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
-     */
-    public void listarServicios( )
-    {
-    	try 
-    	{
-			List <Servicio> lista = alohandes.darServicios();
-
-			String resultado = "En listarServicio";
-			resultado +=  "\n" + listarServicios (lista);
-			panelDatos.actualizarInterfaz(resultado);
-			resultado += "\n Operación terminada";
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
-     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarServicioPorId( )
-    {
-    	try 
-    	{
-    		String idTipoStr = JOptionPane.showInputDialog (this, "Id del servicio?", "Borrar servicio por Id", JOptionPane.QUESTION_MESSAGE);
-    		if (idTipoStr != null)
-    		{
-    			long idTipo = Long.valueOf (idTipoStr);
-    			long tbEliminados = alohandes.eliminarServicioPorId(idTipo);
-
-    			String resultado = "En eliminar Servicio\n\n";
-    			resultado += tbEliminados + " Servicio eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-
-    /**
-     * Busca el usuario con el nombre indicado por el usuario y lo muestra en el panel de datos
-     */
-    public void buscarServicioPorNombre( )
-    {
-    	try 
-    	{
-    		String nombreTb = JOptionPane.showInputDialog (this, "cedula del servicio?", "Buscar servicio por cedula", JOptionPane.QUESTION_MESSAGE);
-    		if (nombreTb != null | nombreTb != "" )
-    		{
-    			VOServicio servicio = (VOServicio) alohandes.darServicioPorNombre(nombreTb);
-    			String resultado = "En buscar servicio por nombre\n\n";
-    			if (servicio != null)
-    			{
-        			resultado += "El servicio es: " + servicio;
-    			}
-    			else
-    			{
-        			resultado += "Un servicio con nombre: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
-    
-    /**
-     * Busca el usuario con el id indicado por el usuario y lo muestra en el panel de datos
-     */
-    public void buscarServicioPorId( )
-    {
-    	try 
-    	{
-    		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id del servicio?", "Buscar servicio por Id", JOptionPane.QUESTION_MESSAGE));
-    		if (Id > 0)
-    		{
-    			VOServicio servicio = (VOServicio) alohandes.darServicioPorId(Id);
-    			String resultado = "En buscar servicio por id\n\n";
-    			if (servicio != null)
-    			{
-        			resultado += "El servicio es: " + servicio;
-    			}
-    			else
-    			{
-        			resultado += "Un servicio con Id: " + Id + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
-    /**
-     * Borra de la base de datos el usuario con el nombre dado po el usuario
-     * Cuando dicho usuario no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarServicioPorNombre( )
-    {
-    	try 
-    	{
-    		String servicio = JOptionPane.showInputDialog (this, "nombre del servicio?", "Borrar servicio por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (servicio != null)
-    		{
-//    			long idTipo = Long.valueOf (servicio);
-    			long tbEliminados = alohandes.eliminarServicioPorNombre(servicio);
-
-    			String resultado = "En eliminar servicio\n\n";
-    			resultado += tbEliminados + " servicio eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+  
     
     //
     //
@@ -856,32 +651,32 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     //
     //
     /* ****************************************************************
-	 * 			CRUD de Habitacion Hotel
+	 * 			CRUD de Habitacion
 	 *****************************************************************/
     /**
      * Adiciona un tipo de usuario con la información dada por el usuario
      * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
      */
-    public void adicionarHotelHabitacion( )
+    public void adicionarHabitacion( )
     {
     	try 
     	{
-			long idHotel= Long.parseLong(JOptionPane.showInputDialog (this, "idHotel", "Adicionar HotelHabitacion", JOptionPane.QUESTION_MESSAGE));
-			long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, " idAlojamiento", "Adicionar HotelHabitacion", JOptionPane.QUESTION_MESSAGE));
-			Integer precioNoche = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar HotelHabitacion", JOptionPane.QUESTION_MESSAGE));
-			Integer capacidad = Integer.parseInt(JOptionPane.showInputDialog (this, "capacidad", "Adicionar HotelHabitacion", JOptionPane.QUESTION_MESSAGE));
-			String tipoOferta = (JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar HotelHabitacion", JOptionPane.QUESTION_MESSAGE));
+			long idHotel= Long.parseLong(JOptionPane.showInputDialog (this, "idHotel", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
+			long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, " idAlojamiento", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
+			Integer precioNoche = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
+			Integer capacidad = Integer.parseInt(JOptionPane.showInputDialog (this, "capacidad", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
+			String tipoOferta = (JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar Habitacion", JOptionPane.QUESTION_MESSAGE));
 
 			
     		if (idHotel > 0 &idAlojamiento > 0&precioNoche> 0&capacidad> 0)
     		{
-    			VOHotelHabitacion tb = (VOHotelHabitacion) alohandes.adicionarHotelHabitacion(idHotel,idAlojamiento, precioNoche, capacidad, tipoOferta);
+    			VOHabitacion tb = (VOHabitacion) alohandes.adicionarHabitacion(idHotel,idAlojamiento, precioNoche, capacidad, tipoOferta);
         		if (tb == null)
         		{
-        			throw new Exception ("No se pudo crear un HotelHabitacion con nit: " + idAlojamiento);
+        			throw new Exception ("No se pudo crear un Habitacion con nit: " + idAlojamiento);
         		}
-        		String resultado = "En adicionarHotelHabitacion\n\n";
-        		resultado += "HotelHabitacion adicionado exitosamente: " + tb;
+        		String resultado = "En adicionarHabitacion\n\n";
+        		resultado += "Habitacion adicionado exitosamente: " + tb;
     			resultado += "\n Operación terminada";
     			panelDatos.actualizarInterfaz(resultado);
     		}
@@ -901,14 +696,14 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     /**
      * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
      */
-    public void listarHotelHabitacion( )
+    public void listarHabitacion( )
     {
     	try 
     	{
-			List <HotelHabitacion> lista = alohandes.darHotelHabitacion();
+			List <Habitacion> lista = alohandes.darHabitacion();
 
-			String resultado = "En listarHotelHabitacion";
-			resultado +=  "\n" + listarHotelHabitacion(lista);
+			String resultado = "En listarHabitacion";
+			resultado +=  "\n" + listarHabitacion(lista);
 			panelDatos.actualizarInterfaz(resultado);
 			resultado += "\n Operación terminada";
 		} 
@@ -932,7 +727,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		if (idTipoStr != null)
     		{
     			long idTipo = Long.valueOf (idTipoStr);
-    			long tbEliminados = alohandes.eliminarHotelHabitacionPorId(idTipo);
+    			long tbEliminados = alohandes.eliminarHabitacionPorId(idTipo);
 
     			String resultado = "En eliminar habitacion\n\n";
     			resultado += tbEliminados + " habitaciones eliminados\n";
@@ -963,7 +758,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id de la habitacion?", "Buscar habitacion por Id", JOptionPane.QUESTION_MESSAGE));
     		if (Id > 0)
     		{
-    			VOHotelHabitacion habitacion = (VOHotelHabitacion) alohandes.darHotelHabitacionPorId(Id);
+    			VOHabitacion habitacion = (VOHabitacion) alohandes.darHabitacionPorId(Id);
     			String resultado = "En buscar habitacion por Id\n\n";
     			if (habitacion != null)
     			{
@@ -1000,139 +795,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     //
     //
     //
-    /* ****************************************************************
-   	 * 			CRUD de Habitacion Hostal
-   	 *****************************************************************/
-       /**
-        * Adiciona un tipo de usuario con la información dada por el usuario
-        * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
-        */
-       public void adicionarHostalHabitacion( )
-       {
-       	try 
-       	{
-       		long idHostal= Long.parseLong(JOptionPane.showInputDialog (this, "idHotel", "Adicionar HostalHabitacion", JOptionPane.QUESTION_MESSAGE));
-			long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, " idAlojamiento", "Adicionar HostalHabitacion", JOptionPane.QUESTION_MESSAGE));
-			Integer precioNoche = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar HostalHabitacion", JOptionPane.QUESTION_MESSAGE));
-			Integer capacidad = Integer.parseInt(JOptionPane.showInputDialog (this, "capacidad", "Adicionar HostalHabitacion", JOptionPane.QUESTION_MESSAGE));
-			String tipoOferta = (JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar HostalHabitacion", JOptionPane.QUESTION_MESSAGE));
-
-			
-    		if (idHostal > 0 &idAlojamiento > 0&precioNoche> 0&capacidad> 0)
-       		{
-       			VOHostalHabitacion tb = (VOHostalHabitacion) alohandes.adicionarHostalHabitacion(habitacion, nit, tipo,capacidad,tamanio,baniera,yacuzzi,sala);
-           		if (tb == null)
-           		{
-           			throw new Exception ("No se pudo crear un HostalHabitacion con nit: " + nit);
-           		}
-           		String resultado = "En adicionarHostalHabitacion\n\n";
-           		resultado += "HostalHabitacion adicionado exitosamente: " + tb;
-       			resultado += "\n Operación terminada";
-       			panelDatos.actualizarInterfaz(resultado);
-       		}
-       		else
-       		{
-       			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-       		}
-   		} 
-       	catch (Exception e) 
-       	{
-//   			e.printStackTrace();
-   			String resultado = generarMensajeError(e);
-   			panelDatos.actualizarInterfaz(resultado);
-   		}
-       }
-
-       /**
-        * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
-        */
-       public void listarHostalHabitacion( )
-       {
-       	try 
-       	{
-   			List <HostalHabitacion> lista = alohandes.darHostalHabitacion();
-
-   			String resultado = "En listarHostalHabitacion";
-   			resultado +=  "\n" + listarHostalHabitacion(lista);
-   			panelDatos.actualizarInterfaz(resultado);
-   			resultado += "\n Operación terminada";
-   		} 
-       	catch (Exception e) 
-       	{
-//   			e.printStackTrace();
-   			String resultado = generarMensajeError(e);
-   			panelDatos.actualizarInterfaz(resultado);
-   		}
-       }
-
-       /**
-        * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
-        * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
-        */
-       public void eliminaHabitacionHostalPorId( )
-       {
-       	try 
-       	{
-       		String idTipoStr = JOptionPane.showInputDialog (this, "Id de la habitacion?", "Borrar habitacion por Id", JOptionPane.QUESTION_MESSAGE);
-       		if (idTipoStr != null)
-       		{
-       			long idTipo = Long.valueOf (idTipoStr);
-       			long tbEliminados = alohandes.eliminarHostalHabitacionPorId(idTipo);
-
-       			String resultado = "En eliminar habitacion\n\n";
-       			resultado += tbEliminados + " habitaciones eliminados\n";
-       			resultado += "\n Operación terminada";
-       			panelDatos.actualizarInterfaz(resultado);
-       		}
-       		else
-       		{
-       			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-       		}
-   		} 
-       	catch (Exception e) 
-       	{
-//   			e.printStackTrace();
-   			String resultado = generarMensajeError(e);
-   			panelDatos.actualizarInterfaz(resultado);
-   		}
-       }
-       
-       
-       /**
-        * Busca el usuario con el id indicado por el usuario y lo muestra en el panel de datos
-        */
-       public void buscarHabitacionHostalPorId( )
-       {
-       	try 
-       	{
-       		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id de la habitacion?", "Buscar habitacion por Id", JOptionPane.QUESTION_MESSAGE));
-       		if (Id > 0)
-       		{
-       			VOHostalHabitacion habitacion = (VOHostalHabitacion) alohandes.darHostalHabitacionPorId(Id);
-       			String resultado = "En buscar habitacion por Id\n\n";
-       			if (habitacion != null)
-       			{
-           			resultado += "la habitacion es: " + habitacion;
-       			}
-       			else
-       			{
-           			resultado += "Un habitacion con Id: " + Id + " NO EXISTE\n";
-       			}
-       			resultado += "\n Operación terminada";
-       			panelDatos.actualizarInterfaz(resultado);
-       		}
-       		else
-       		{
-       			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-       		}
-   		} 
-       	catch (Exception e) 
-       	{
-//   			e.printStackTrace();
-   			String resultado = generarMensajeError(e);
-   			panelDatos.actualizarInterfaz(resultado);
-   		}
-       }
+   
        //
        //
        //
@@ -2894,11 +2557,11 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
         return resp;
 	}
     
-    private String listarHotelHabitacion(List<HotelHabitacion> lista)
+    private String listarHabitacion(List<Habitacion> lista)
     {
     	String resp = "las habitaciones existentes son:\n";
     	int i = 1;
-        for (HotelHabitacion tb : lista)
+        for (Habitacion tb : lista)
         {
         	resp += i++ + ". " + tb.toString() + "\n";
         }
