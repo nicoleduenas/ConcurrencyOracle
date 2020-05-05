@@ -76,102 +76,7 @@ public class Alohandes
 		pp.cerrarUnidadPersistencia ();
 	}
 
-	/* ****************************************************************
-	 * 			M√©todos para manejar los Servicios
-	 *****************************************************************/
-	/**
-	 * Adiciona de manera persistente un Servicio 
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre del Servicio
-	 * @return El objeto Servicio adicionado. null si ocurre alguna Excepci√≥n
-	 */
-	public Servicio adicionarServicio (String nombre, long idAlojamiento)
-	{
-		log.info ("Adicionando servicio: " + nombre + idAlojamiento);
-		Servicio Servicio = pp.adicionarServicio (nombre, idAlojamiento);		
-		log.info ("Adicionando servicio: " + Servicio);
-		return Servicio;
-	}
-
-	/**
-	 * Elimina un Servicio por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre del Servicio a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarServicioPorNombre (String nombre)
-	{
-		log.info ("Eliminando Servicio por nombre: " + nombre);
-		long resp = pp.eliminarServicioPorNombre (nombre);		
-		log.info ("Eliminando Servicio por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Elimina un Servicio por su identificador
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param idServicio - El id del Servicio a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarServicioPorId (long idServicio)
-	{
-		log.info ("Eliminando Servicio por id: " + idServicio);
-		long resp = pp.eliminarServicioPorId (idServicio);		
-		log.info ("Eliminando Servicio por id: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Encuentra todos los Servicios en Alohandes
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos Servicio con todos los Servicios que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<Servicio> darServicios ()
-	{
-		log.info ("Consultando Servicios");
-		List<Servicio> Servicios = pp.darServicios ();	
-		log.info ("Consultando Servicios: " + Servicios.size() + " existentes");
-		return Servicios;
-	}
-
-	/**
-	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos VOServicio con todos los Servicios que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<VOServicio> darVOServicios ()
-	{
-		log.info ("Generando los VO de los servicios");        
-		List<VOServicio> voTipos = new LinkedList<VOServicio> ();
-		for (Servicio tb : pp.darServicios ())
-		{
-			voTipos.add (tb);
-		}
-		log.info ("Generando los VO de Servicios: " + voTipos.size() + " existentes");
-		return voTipos;
-	}
-
-	/**
-	 * Encuentra el Servicios en Alohandes con el nombre solicitado
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Alojamiento
-	 * @return Un objeto Servicio con el Servicios de ese nombre que conoce la aplicaci√≥n, 
-	 * lleno con su informaci√≥n b√°sica
-	 */
-	public Servicio darServicioPorNombre (String nombre)
-	{
-		log.info ("Buscando Servicio por nombre: " + nombre);
-		List<Servicio> tb = pp.darServicioPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
-
-	public Servicio darServicioPorId (long id)
-	{
-		log.info ("Dar informaci√≥n de un servicio por id: " + id);
-		Servicio servicio = pp.darServicioPorId (id);
-		log.info ("Buscando Servicio por Id: " + servicio != null ? servicio : "NO EXISTE");
-		return servicio;
-	}
+	
 	/* ****************************************************************
 	 * 			M√©todos para manejar las AlojamientoS
 	 *****************************************************************/
@@ -183,10 +88,10 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Alojamiento adicionarAlojamiento (String nombre, String ubicacion, long tipooferta, long tipo)
+	public Alojamiento adicionarAlojamiento (long id, char habilitado,String nombre,  String tipo, String servicios)
 	{
 		log.info ("Adicionando Alojamiento " + nombre);
-		Alojamiento alojamiento = pp.adicionarAlojamiento (nombre, ubicacion, tipooferta, tipo);
+		Alojamiento alojamiento = pp.adicionarAlojamiento (id,habilitado, nombre, tipo, servicios);
 		log.info ("Adicionando alojamiento: " + alojamiento);
 		return alojamiento;
 	}
@@ -389,81 +294,9 @@ public class Alohandes
 		return voClientes;
 	}
 
-
-	*****************************************************************/
-	/**
-	 * Adiciona de manera persistente una Alojamiento 
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre la AptoSemestre
-	 * @param idServicio - El identificador del Servicio de la AptoSemestre - Debe existir un Servicio con este identificador
-	 * @param gradoAlcohol - El grado de alcohol de la AptoSemestre (Mayor que 0)
-	 * @return El objeto AptoSemestre adicionado. null si ocurre alguna Excepci√≥n
-	 */
-	public AptoSemestre adicionarAptoSemestre ( long id, Integer precioMes, Boolean amoblado, Integer habitaciones)
-	{
-		log.info ("Adicionando AptoSemestre " );
-		AptoSemestre AptoSemestre = pp.adicionarAptoSemestre (id, precioMes, amoblado, habitaciones);
-		log.info ("Adicionando AptoSemestre: " + AptoSemestre);
-		return AptoSemestre;
-	}
-
-
-	/**
-	 * Elimina una AptoSemestre por su identificador
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param idAptoSemestre - El identificador de la AptoSemestre a eliminar
-	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
-	 */
-	public long eliminarAptoSemestrePorId (long idAptoSemestre)
-	{
-		log.info ("Eliminando AptoSemestre por id: " + idAptoSemestre);
-		long resp = pp.eliminarAptoSemestrePorId (idAptoSemestre);
-		pp.eliminarAlojamientoPorId (idAptoSemestre);
-		log.info ("Eliminando AptoSemestre por id: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Encuentra todas las AptoSemestre en Alohandes
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos AptoSemestre con todos las AptoSemestres que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<AptoSemestre> darAptoSemestres ()
-	{
-		log.info ("Consultando AptoSemestres");
-		List<AptoSemestre> AptoSemestres = pp.darAptoSemestres ();	
-		log.info ("Consultando AptoSemestres: " + AptoSemestres.size() + " AptoSemestres existentes");
-		return AptoSemestres;
-	}
-
-	/**
-	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos VOAptoSemestre con todos las AptoSemestres que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<VOAptoSemestre> darVOAptoSemestres ()
-	{
-		log.info ("Generando los VO de las AptoSemestres");       
-		List<VOAptoSemestre> voAptoSemestres = new LinkedList<VOAptoSemestre> ();
-		for (AptoSemestre beb : pp.darAptoSemestres ())
-		{
-			voAptoSemestres.add (beb);
-		}
-		log.info ("Generando los VO de las AptoSemestres: " + voAptoSemestres.size() + " existentes");
-		return voAptoSemestres;
-	}
-
-
-	public AptoSemestre darAptoSemestresPorId(long id)
-	{
-		log.info ("Dar informaci√≥n de un aptoSemestre por id: " + id);
-		AptoSemestre aptoSemestre = pp.darAptoSemestrePorId (id);
-		log.info ("Buscando aptoSemestre por Id: " + aptoSemestre != null ? aptoSemestre : "NO EXISTE");
-		return aptoSemestre;
-	}
-
-	*****************************************************************/
-
+//+++++++++++++++++++++++++++++++++++++++++++++++++
+	
+	
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -472,10 +305,10 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la AptoTemporada (Mayor que 0)
 	 * @return El objeto AptoTemporada adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public AptoTemporada adicionarAptoTemporada ( long id, Integer precio, String menaje, Integer habitaciones, long idAlojamiento, long idProveedor)
+	public AptoTemporada adicionarAptoTemporada (  long idAlojamiento, long idProveedor, Integer precio, String menaje, Integer habitaciones)
 	{
 		log.info ("Adicionando AptoTemporada " );
-		AptoTemporada AptoTemporada = pp.adicionarAptoTemporada (id, precio, menaje, habitaciones);
+		AptoTemporada AptoTemporada = pp.adicionarAptoTemporada (idAlojamiento, idProveedor, precio, menaje, habitaciones);
 		log.info ("Adicionando AptoTemporada: " + AptoTemporada);
 		return AptoTemporada;
 	}
@@ -504,7 +337,7 @@ public class Alohandes
 	public List<AptoTemporada> darAptoTemporada ()
 	{
 		log.info ("Consultando AptoTemporada");
-		List<AptoTemporada> AptoTemporada = pp.darAptoTemporada ();	
+		List<AptoTemporada> AptoTemporada = pp.darAptoTemporadas ();	
 		log.info ("Consultando AptoTemporada: " + AptoTemporada.size() + " AptoTemporada existentes");
 		return AptoTemporada;
 	}
@@ -537,146 +370,74 @@ public class Alohandes
 
 	//*********************************************************
 
+
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre la HostalHabitacion
-	 * @param idServicio - El identificador del Servicio de la HostalHabitacion - Debe existir un Servicio con este identificador
-	 * @param gradoAlcohol - El grado de alcohol de la HostalHabitacion (Mayor que 0)
-	 * @return El objeto HostalHabitacion adicionado. null si ocurre alguna Excepci√≥n
+	 * @param nombre - El nombre la Habitacion
+	 * @param idServicio - El identificador del Servicio de la Habitacion - Debe existir un Servicio con este identificador
+	 * @param gradoAlcohol - El grado de alcohol de la Habitacion (Mayor que 0)
+	 * @return El objeto Habitacion adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public HostalHabitacion adicionarHostalHabitacion ( long id, String horario, int precioNoche, int capacidad, String tipoOferta, long idAlojamiento,long idHostal)
+	public Habitacion adicionarHabitacion ( long idAlojamiento, int precioNoche, int capacidad, String tipoOferta,  long idHotel)
 	{
-		log.info ("Adicionando HostalHabitacion " );
-		HostalHabitacion HostalHabitacion = pp.adicionarHostalHabitacion (id, horario,precioNoche, capacidad, tipoOferta);
-		log.info ("Adicionando HostalHabitacion: " + HostalHabitacion);
-		return HostalHabitacion;
+		log.info ("Adicionando Habitacion " );
+		Habitacion Habitacion = pp.adicionarHabitacion (idAlojamiento,  precioNoche, capacidad, tipoOferta, idHotel);
+		log.info ("Adicionando Habitacion: " + Habitacion);
+		return Habitacion;
 	}
 
 
 	/**
-	 * Elimina una HostalHabitacion por su identificador
+	 * Elimina una Habitacion por su identificador
 	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param idHostalHabitacion - El identificador de la HostalHabitacion a eliminar
+	 * @param idHabitacion - El identificador de la Habitacion a eliminar
 	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
 	 */
-	public long eliminarHostalHabitacionPorId (long idHostalHabitacion)
+	public long eliminarHabitacionPorId (long idHabitacion)
 	{
-		log.info ("Eliminando HostalHabitacion por id: " + idHostalHabitacion);
-		long resp = pp.eliminarHostalHabitacionPorId (idHostalHabitacion);
-		pp.eliminarAlojamientoPorId (idHostalHabitacion);
-		log.info ("Eliminando HostalHabitacion por id: " + resp + " tuplas eliminadas");
+		log.info ("Eliminando Habitacion por id: " + idHabitacion);
+		long resp = pp.eliminarHabitacionPorId (idHabitacion);
+		pp.eliminarAlojamientoPorId (idHabitacion);
+		log.info ("Eliminando Habitacion por id: " + resp + " tuplas eliminadas");
 		return resp;
 	}
 
 	/**
-	 * Encuentra todas las HostalHabitacion en Alohandes
+	 * Encuentra todas las Habitacion en Alohandes
 	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos HostalHabitacion con todos las HostalHabitacions que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+	 * @return Una lista de objetos Habitacion con todos las Habitacions que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
 	 */
-	public List<HostalHabitacion> darHostalHabitacion ()
+	public List<Habitacion> darHabitacion ()
 	{
-		log.info ("Consultando HostalHabitacion");
-		List<HostalHabitacion> HostalHabitacion = pp.darHostalHabitacion ();	
-		log.info ("Consultando HostalHabitacion: " + HostalHabitacion.size() + " HostalHabitacion existentes");
-		return HostalHabitacion;
+		log.info ("Consultando Habitacion");
+		List<Habitacion> Habitacion = pp.darHabitaciones ();	
+		log.info ("Consultando Habitacion: " + Habitacion.size() + " Habitacion existentes");
+		return Habitacion;
 	}
 
 	/**
 	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
 	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos VOHostalHabitacion con todos las HostalHabitacions que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+	 * @return Una lista de objetos VOHabitacion con todos las Habitacions que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
 	 */
-	public List<VOHostalHabitacion> darVOHostalHabitacion ()
+	public List<VOHabitacion> darVOHabitacion ()
 	{
-		log.info ("Generando los VO de las HostalHabitacion");       
-		List<VOHostalHabitacion> voHostalHabitacion = new LinkedList<VOHostalHabitacion> ();
-		for (HostalHabitacion beb : pp.darHostalHabitacions ())
+		log.info ("Generando los VO de las Habitacion");       
+		List<VOHabitacion> voHabitacion = new LinkedList<VOHabitacion> ();
+		for (Habitacion beb : pp.darHabitaciones ())
 		{
-			voHostalHabitacion.add (beb);
+			voHabitacion.add (beb);
 		}
-		log.info ("Generando los VO de las HostalHabitacion: " + voHostalHabitacion.size() + " existentes");
-		return voHostalHabitacion;
+		log.info ("Generando los VO de las Habitacion: " + voHabitacion.size() + " existentes");
+		return voHabitacion;
 	}
 
 
-	public HostalHabitacion darHostalHabitacionPorId(long id)
+	public Habitacion darHabitacionPorId(long id)
 	{
 		log.info ("Dar informaci√≥n de un aptoSemestre por id: " + id);
-		HostalHabitacion aptoTemporada = pp.darHostalHabitacionPorId (id);
-		log.info ("Buscando habitacion hostal por Id: " + aptoTemporada != null ? aptoTemporada : "NO EXISTE");
-		return aptoTemporada;
-	}
-
-	*****************************************************************/
-
-	/**
-	 * Adiciona de manera persistente una Alojamiento 
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre la HotelHabitacion
-	 * @param idServicio - El identificador del Servicio de la HotelHabitacion - Debe existir un Servicio con este identificador
-	 * @param gradoAlcohol - El grado de alcohol de la HotelHabitacion (Mayor que 0)
-	 * @return El objeto HotelHabitacion adicionado. null si ocurre alguna Excepci√≥n
-	 */
-	public HotelHabitacion adicionarHotelHabitacion ( long id, Integer precio, String menaje, Integer habitaciones,long idAlojamiento, long idHotel)
-	{
-		log.info ("Adicionando HotelHabitacion " );
-		HotelHabitacion HotelHabitacion = pp.adicionarHotelHabitacion (id, precio, menaje, habitaciones);
-		log.info ("Adicionando HotelHabitacion: " + HotelHabitacion);
-		return HotelHabitacion;
-	}
-
-
-	/**
-	 * Elimina una HotelHabitacion por su identificador
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param idHotelHabitacion - El identificador de la HotelHabitacion a eliminar
-	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
-	 */
-	public long eliminarHotelHabitacionPorId (long idHotelHabitacion)
-	{
-		log.info ("Eliminando HotelHabitacion por id: " + idHotelHabitacion);
-		long resp = pp.eliminarHotelHabitacionPorId (idHotelHabitacion);
-		pp.eliminarAlojamientoPorId (idHotelHabitacion);
-		log.info ("Eliminando HotelHabitacion por id: " + resp + " tuplas eliminadas");
-		return resp;
-	}
-
-	/**
-	 * Encuentra todas las HotelHabitacion en Alohandes
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos HotelHabitacion con todos las HotelHabitacions que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<HotelHabitacion> darHotelHabitacion ()
-	{
-		log.info ("Consultando HotelHabitacion");
-		List<HotelHabitacion> HotelHabitacion = pp.darHotelHabitacion ();	
-		log.info ("Consultando HotelHabitacion: " + HotelHabitacion.size() + " HotelHabitacion existentes");
-		return HotelHabitacion;
-	}
-
-	/**
-	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return Una lista de objetos VOHotelHabitacion con todos las HotelHabitacions que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-	 */
-	public List<VOHotelHabitacion> darVOHotelHabitacion ()
-	{
-		log.info ("Generando los VO de las HotelHabitacion");       
-		List<VOHotelHabitacion> voHotelHabitacion = new LinkedList<VOHotelHabitacion> ();
-		for (HotelHabitacion beb : pp.darHotelHabitacions ())
-		{
-			voHotelHabitacion.add (beb);
-		}
-		log.info ("Generando los VO de las HotelHabitacion: " + voHotelHabitacion.size() + " existentes");
-		return voHotelHabitacion;
-	}
-
-
-	public HotelHabitacion darHotelHabitacionPorId(long id)
-	{
-		log.info ("Dar informaci√≥n de un aptoSemestre por id: " + id);
-		HotelHabitacion aptoTemporada = pp.darHotelHabitacionPorId (id);
+		Habitacion aptoTemporada = pp.darHabitacionPorId (id);
 		log.info ("Buscando habitacion hotel por Id: " + aptoTemporada != null ? aptoTemporada: "NO EXISTE");
 		return aptoTemporada;
 	}
@@ -687,15 +448,16 @@ public class Alohandes
 	/**
 	 * Adiciona de manera persistente una vivienda universitaria
 	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @param amoblado 
 	 * @param nombre - El nombre la ViviendaUniversitaria
 	 * @param idServicio - El identificador del Servicio de la ViviendaUniversitaria - Debe existir un Servicio con este identificador
 	 * @param gradoAlcohol - El grado de alcohol de la ViviendaUniversitaria (Mayor que 0)
 	 * @return El objeto ViviendaUniversitaria adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public ViviendaUniversitaria adicionarViviendaUniversitaria ( long id, Integer precio, String menaje, Integer habitaciones, long idAlojamiento, long idProveedor)
+	public ViviendaUniversitaria adicionarViviendaUniversitaria ( long idAlojamiento,long idProveedor, Integer precioMes,char amoblado, Integer habitaciones, long telefono, String menaje, String tipoOferta)
 	{
-		log.info ("Adicionando HotelHabitacion " );
-		ViviendaUniversitaria ViviendaUniversitaria = pp.adicionarViviendaUniversitaria (id, precio, menaje, habitaciones);
+		log.info ("Adicionando Habitacion " );
+		ViviendaUniversitaria ViviendaUniversitaria = pp.adicionarViviendaUniversitaria (idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, menaje, tipoOferta);
 		log.info ("Adicionando ViviendaUniversitaria: " + ViviendaUniversitaria);
 		return ViviendaUniversitaria;
 	}
@@ -738,7 +500,7 @@ public class Alohandes
 	{
 		log.info ("Generando los VO de las ViviendaUniversitaria");       
 		List<VOViviendaUniversitaria> voViviendaUniversitaria = new LinkedList<VOViviendaUniversitaria> ();
-		for (ViviendaUniversitaria beb : pp.darViviendaUniversitarias ())
+		for (ViviendaUniversitaria beb : pp.darViviendasUniversitarias ())
 		{
 			voViviendaUniversitaria.add (beb);
 		}
@@ -767,7 +529,7 @@ public class Alohandes
 	{
 		log.info ("Adicionando Hotel " + nombre);
 		Hotel hotel = pp.adicionarHotel (idHotel, nombre, ubicacion, email, idProveedor, telefono);
-		log.info ("Adicionando Hotel: " + Hotel);
+		log.info ("Adicionando Hotel: " + nombre);
 		return hotel;
 	}
 
@@ -849,7 +611,7 @@ public class Alohandes
 		return hotel;
 	}
 
-	*****************************************************************/
+//	*****************************************************************/
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -861,8 +623,8 @@ public class Alohandes
 	public Hostal adicionarHostal (long idHostal, String nombre, String horario,String ubicacion, String email, long idProveedor, long telefono)
 	{
 		log.info ("Adicionando Hostal " + nombre);
-		Hostal hostal = pp.adicionarHostal (idHostal, nombre, horario, ubicacion, email, idProveedor, telefono);
-		log.info ("Adicionando Hostal: " + Hostal);
+		Hostal hostal = pp.adicionarHostal (idHostal, nombre, horario,email, ubicacion, idProveedor, telefono);
+		log.info ("Adicionando Hostal: " + nombre);
 		return hostal;
 	}
 
@@ -902,7 +664,7 @@ public class Alohandes
 	public List<Hostal> darHostales ()
 	{
 		log.info ("Consultando Hostales");
-		List<Hostal> hoteles = pp.darHostales ();	
+		List<Hostal> hoteles = pp.darHostals ();	
 		log.info ("Consultando Hostales: " + hoteles.size() + " Hostales existentes");
 		return hoteles;
 	}
@@ -916,7 +678,7 @@ public class Alohandes
 	{
 		log.info ("Generando los VO de las Hostales");       
 		List<VOHostal> voHostales = new LinkedList<VOHostal> ();
-		for (Hostal beb : pp.darHostales ())
+		for (Hostal beb : pp.darHostals ())
 		{
 			voHostales.add (beb);
 		}
@@ -946,7 +708,7 @@ public class Alohandes
 
 
 
-	*****************************************************************/
+	//*****************************************************************/
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -955,27 +717,15 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Propietario adicionarPropietario (long documento, String nombre, String vinculacion, String correo, long telefono, long idProveedor)
+	public Propietario adicionarPropietario (long cedula, long idProveedor, String email, long telefono, String vinculacion)
 	{
-		log.info ("Adicionando Propietario " + nombre);
-		Propietario hostal = pp.adicionarPropietario ( documento, correo , telefono, nombre, vinculacion, idProveedor);
-		log.info ("Adicionando Propietario: " + Propietario);
+		log.info ("Adicionando Propietario " + cedula);
+		Propietario hostal = pp.adicionarPropietario ( cedula,  idProveedor, email, telefono, vinculacion);
+		log.info ("Adicionando Propietario: " + cedula);
 		return hostal;
 	}
 
-	/**
-	 * Elimina una Propietario por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Propietario a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarPropietarioPorNombre (String nombre)
-	{
-		log.info ("Eliminando Propietario por nombre: " + nombre);
-		long resp = pp.eliminarPropietarioPorNombre (nombre);
-		log.info ("Eliminando Propietario por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
+	
 
 	/**
 	 * Elimina una Propietario por su identificador
@@ -1026,12 +776,7 @@ public class Alohandes
 	 * Adiciona entradas al log de la aplicaci√≥n
 	 * @return El n√∫mero de Propietarios eliminadas
 	 */
-	public Propietario  darPropietariosPorNombre(String nombre)
-	{
-		log.info ("Buscando Propietario por nombre: " + nombre);
-		List<Propietario> tb = pp.darPropietarioPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
+	
 
 	public Propietario darPropietariosPorId(long id)
 	{
@@ -1042,7 +787,7 @@ public class Alohandes
 	}
 
 
-	*****************************************************************/
+//	*****************************************************************/
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -1051,10 +796,10 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Proveedor adicionarProveedor (long id, String tipo)
+	public Proveedor adicionarProveedor (long id, String tipo, String nombre)
 	{
 		log.info ("Adicionando Proveedor " );
-		Proveedor Proveedor = pp.adicionarProveedor (id, tipo);
+		Proveedor Proveedor = pp.adicionarProveedor (id, tipo, nombre);
 		log.info ("Adicionando Proveedor: " + Proveedor);
 		return Proveedor;
 	}
@@ -1115,23 +860,43 @@ public class Alohandes
 		return proveedor;
 	}
 
+	public Propietario  darProveedoresPorNombre(String nombre)
+	{
+		log.info ("Buscando Proveedor por nombre: " + nombre);
+		List<Proveedor> tb = pp.darProveedorPorNombre (nombre);
+		return !tb.isEmpty () ? tb.get (0) : null;
+	}
+		/**
+		 * Elimina una Propietario por su nombre
+		 * Adiciona entradas al log de la aplicaci√≥n
+		 * @param nombre - El nombre de la Propietario a eliminar
+		 * @return El n√∫mero de tuplas eliminadas
+		 */
+		public long eliminarProveedoresPorNombre (String nombre )
+		{
+			log.info ("Eliminando Proveedor por nombre: " + nombre);
+			long resp = pp.eliminarProveedorPorNombre (nombre);
+			log.info ("Eliminando Proveedor por nombre: " + resp + " tuplas eliminadas");
+			return resp;
+		}
+	
 
 
-
-	*****************************************************************/
+	//*****************************************************************/
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @param personas 
 	 * @param nombre - El nombre la Alojamiento
 	 * @param idServicio - El identificador del Servicio de la Alojamiento - Debe existir un Servicio con este identificador
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Reserva adicionarReserva (long id, long idCliente, long idAlojamiento, long idReserva, int descuento, int cantpagos, Date fechaConfirmacion, 
-			Date fechaCheckIn, Date fechaCheckOut, double precioTotal)
+	public Reserva adicionarReserva (long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente)
 	{
 		log.info ("Adicionando Reserva " );
-		Reserva Reserva = pp.adicionarReserva (id, idCliente, idAlojamiento, cantpagos, fechaConfirmacion, fechaCheckIn, fechaCheckOut,descuento, precioTotal);
+		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
 		log.info ("Adicionando Reserva: " + Reserva);
 		return Reserva;
 	}
@@ -1142,11 +907,11 @@ public class Alohandes
 	 * @param nombre - El nombre de la Reserva a eliminar
 	 * @return El n√∫mero de tuplas eliminadas
 	 */
-	public long eliminarReservaPorFecha (String fecha)
+	public long eliminarReservaPorCliente (long idCliente)
 	{
-		log.info ("Eliminando Reserva por fecha: " + fecha);
-		long resp = pp.eliminarReservaPorFecha (fecha);
-		log.info ("Eliminando Reserva por fecha: " + resp + " tuplas eliminadas");
+		log.info ("Eliminando Reserva por cliente: " + idCliente);
+		long resp = pp.eliminarReservaPorCliente (idCliente);
+		log.info ("Eliminando Reserva por cliente: " + resp + " tuplas eliminadas");
 		return resp;
 	}
 
@@ -1199,10 +964,10 @@ public class Alohandes
 	 * Adiciona entradas al log de la aplicaci√≥n
 	 * @return El n√∫mero de Reservas eliminadas
 	 */
-	public Reserva  darReservasPorFecha(String fechaCheckOut)
+	public Reserva  darReservasPorCliente(long cliente)
 	{
-		log.info ("Buscando Reserva por nombre: " + fechaCheckOut);
-		List<Reserva> tb = pp.darReservaPorFecha (fechaCheckOut);
+		log.info ("Buscando Reserva por cliente: " + cliente);
+		List<Reserva> tb = pp.darReservaPorCliente (cliente);
 		return !tb.isEmpty () ? tb.get (0) : null;
 	}
 
@@ -1217,7 +982,7 @@ public class Alohandes
 
 
 
-	*****************************************************************/
+	//*****************************************************************/
 	/**
 	 * Adiciona de manera persistente una Alojamiento 
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -1226,27 +991,15 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Empresa adicionarEmpresa (long nit, String nombre, String registrado, String correo, long idProveedor)
+	public Empresa adicionarEmpresa (long nit,  String correo, long idProveedor, char registrado)
 	{
-		log.info ("Adicionando Empresa " + nombre);
-		Empresa empresa = pp.adicionarEmpresa (nit, nombre, registrado, correo, idProveedor);
-		log.info ("Adicionando Empresa: " + empresa);
+		log.info ("Adicionando Empresa " + nit);
+		Empresa empresa = pp.adicionarEmpresa (nit,  correo,idProveedor,registrado);
+		log.info ("Adicionando Empresa: " + nit);
 		return empresa;
 	}
 
-	/**
-	 * Elimina una Empresa por su nombre
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @param nombre - El nombre de la Empresa a eliminar
-	 * @return El n√∫mero de tuplas eliminadas
-	 */
-	public long eliminarEmpresaPorNombre (String nombre)
-	{
-		log.info ("Eliminando Empresa por nombre: " + nombre);
-		long resp = pp.eliminarEmpresaPorNombre (nombre);
-		log.info ("Eliminando Empresa por nombre: " + resp + " tuplas eliminadas");
-		return resp;
-	}
+
 
 	/**
 	 * Elimina una Empresa por su identificador
@@ -1271,7 +1024,7 @@ public class Alohandes
 	{
 		log.info ("Consultando Empresas");
 		List<Empresa> empresas = pp.darEmpresas ();	
-		log.info ("Consultando Empresas: " + Empresas.size() + " Empresas existentes");
+		log.info ("Consultando Empresas: " + empresas.size() + " Empresas existentes");
 		return empresas;
 	}
 
@@ -1292,17 +1045,7 @@ public class Alohandes
 		return voEmpresas;
 	}
 
-	/**
-	 * Elimina las Empresas que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return El n√∫mero de Empresas eliminadas
-	 */
-	public Empresa  darEmpresasPorNombre(String nombre)
-	{
-		log.info ("Buscando Empresa por nombre: " + nombre);
-		List<Empresa> tb = pp.darEmpresaPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
+	
 
 	public Empresa darEmpresasPorId(long id)
 	{

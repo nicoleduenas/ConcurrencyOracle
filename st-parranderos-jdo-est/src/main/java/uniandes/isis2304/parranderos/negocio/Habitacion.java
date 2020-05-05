@@ -1,6 +1,6 @@
 package uniandes.isis2304.parranderos.negocio;
 
-public class HostalHabitacion  implements VOHostalHabitacion 
+public class Habitacion  extends Alojamiento implements VOHabitacion 
 {
 	/* **********************
 	 * 			Atributos
@@ -23,7 +23,7 @@ public class HostalHabitacion  implements VOHostalHabitacion
 	/**
 	 * Constructor por defecto
 	 */
-	public HostalHabitacion() 
+	public Habitacion() 
 	{
 		this.id = 0;
 		this.precioNoche = 0;
@@ -40,9 +40,9 @@ public class HostalHabitacion  implements VOHostalHabitacion
 	 * @param horario - El horario en el que el bebedor vista el bar (DIURNO, NOCTURNO, TODOS)
 	 * @param tipoOferta 
 	 */
-	public HostalHabitacion(long id, Integer precioNoche, String horario, Integer capacidad, String tipoOferta) 
+	public Habitacion(long idHabitacion, String horario, int precioNoche, int capacidad, String tipoOferta) 
 	{
-		this.id = id;
+		this.id = idHabitacion;
 		this.precioNoche = precioNoche;
 		this.capacidad = capacidad;
 		this.horario = horario;
@@ -121,5 +121,17 @@ public class HostalHabitacion  implements VOHostalHabitacion
 	public void setPrecioNoche(Integer precioNoche) 
 	{
 		this.precioNoche = precioNoche;
+	}
+
+	@Override
+	public String getTipo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUbicacion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

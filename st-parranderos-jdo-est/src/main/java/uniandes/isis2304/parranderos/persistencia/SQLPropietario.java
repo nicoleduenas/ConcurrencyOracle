@@ -31,10 +31,10 @@ public class SQLPropietario {
 	}
 	
 	
-	public long adicionarPropietario (PersistenceManager pm, long idPropietario, String nombre, String ubicacion, String tipooferta, String tipo) 
+	public long adicionarPropietario (PersistenceManager pm, long id,  long idProveedor, String email, long telefono, String vinculacion) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPropietario () + "(id, nombre, ubicacion, tipooferta	, tipo) values (?, ?, ?, ?, ?)");
-        q.setParameters(idPropietario, nombre, ubicacion, tipooferta, tipo);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPropietario () + "(id, idProveedor, email, telefono, vinculacion) values (?,?,?, ?, ?)");
+        q.setParameters(id, idProveedor, email, telefono, vinculacion);
         return (long) q.executeUnique();
 	}
 

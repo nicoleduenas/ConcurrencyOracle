@@ -1,15 +1,21 @@
 {
-	"title": "Nombres de las tablas de Parranderos Uniandes para la aplicación A",
-	"unidadPersistencia": "Parranderos",
+	"title": "Nombres de las tablas de Alohandes para la aplicación A",
+	"unidadPersistencia": "Alohandes",
 	"tablas":
 	[
-		"Parranderos_sequence",
-		"A_TIPOBEBIDA",
-		"A_BEBIDA",
-		"A_BAR",
-		"A_BEBEDOR",
-		"A_GUSTAN",
-		"A_SIRVEN",
-		"A_VISITAN"
+		"Alohandes_sequence",
+		"A_PROPIETARIO",
+		"A_EMPRESA",
+		"A_CLIENTE",
+		"A_ALOJAMIENTO",
+		"A_PROVEEDOR",
+		"A_SERVICIO",
+		"A_RESERVA",
+		"A_HOTEL",
+		"A_HOSTAL",
+		"A_HABITACIONHOTEL",
+		"A_APTOSEMESTRE",
+		"A_VIVIENDAUNIVERSITARIA"
+		
 	]
 }

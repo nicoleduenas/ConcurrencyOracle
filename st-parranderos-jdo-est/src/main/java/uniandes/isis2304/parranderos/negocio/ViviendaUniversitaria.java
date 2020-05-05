@@ -1,103 +1,108 @@
 package uniandes.isis2304.parranderos.negocio;
 
-
-public class ViviendaUniversitaria  implements VOViviendaUniversitaria 
+public class ViviendaUniversitaria implements VOServicio
 {
-	/* **********************
-	 * 			Atributos
-	 ***********************/
-
-	private long id;
+	 private long id;	
+		
+	
 
 
-	private Integer telefono;
+		private boolean amoblado;
 
 
-	private Boolean amoblado;
-
-	private String tipoOferta;
-	private Integer precioNoche;
-	/* **********************
-	 * 			Métodos
-	 ***********************/
-
-	public ViviendaUniversitaria() 
-	{
-		this.id = 0;
-
-		this.amoblado = false;
-		this.telefono = 0;
-		this.tipoOferta = "";
-		this.setPrecioNoche(0);
-	}
-
-	/**
-	 * Constructor con valores
-	 */
-	public ViviendaUniversitaria(long id, Integer telefono, Boolean amoblado,  String tipoOferta) 
-	{
-		this.id = id;
-
-		this.telefono = telefono;
-		this.amoblado = amoblado;
-		this.tipoOferta = tipoOferta;
-	}
-
-	public String getTipoOferta() 
-	{
-		return tipoOferta;
-	}
+		private int telefono;
 
 
-	public void setTipoOferta(String tipoOferta) 
-	{
-		this.tipoOferta = tipoOferta;
-	}
-	public Integer getTelefono() 
-	{
-		return telefono;
-	}
-
-	public void setTelefono(Integer telefono) 
-	{
-		this.telefono = telefono;
-	}
-
-	public long getId() 
-	{
-		return id;
-	}
-
-	public void setId(long id) 
-	{
-		this.id = id;
-	}
-
-	public Boolean getAmoblado() 
-	{
-		return amoblado;
-	}
+		private int precioNoche;
 
 
-	public void setamoblado(Boolean amoblado) 
-	{
-		this.amoblado = amoblado;
-	}
+		private String ubicacion;
 
 
-	@Override
-	public String toString() 
-	{
-		return "Visitan [id=" + id + ", amoblado=" + amoblado + ", tipoOferta=" + tipoOferta + ", telefono="
-				+ telefono + "]";
-	}
+		private String tipoOferta;
 
-	public Integer getPrecioNoche() {
-		return precioNoche;
-	}
 
-	public void setPrecioNoche(Integer i) {
-		this.precioNoche = i;
-	}
+	    public ViviendaUniversitaria(long id, boolean amoblado, int telefono, int precioNoche, String ubicacion, String tipoOferta ) {
+	        this.id = id;
+	        this.setAmoblado(amoblado);
+	        this.setTelefono(telefono);
+	        this.setPrecioNoche(precioNoche);
+	        this.setUbicacion(ubicacion);
+	        this.setTipoOferta(tipoOferta)
+	        		;
 
+	    }
+	    
+	    public ViviendaUniversitaria() {
+	        this.id = 0;
+	        this.setAmoblado(false);
+	        this.setTelefono(0);
+	        this.setPrecioNoche(0);
+	        this.setUbicacion("");
+	        this.setTipoOferta("");
+	    }
+
+	    public long getId() {
+	        return id;
+	    }
+
+	    public void setId(long id) {
+	        this.id = id;
+	    }
+
+	  
+
+	    
+	    
+//	    @Override
+//	    public String toString() {
+//	        return "Servicio[" + "id=" + id + ", nombre=" +  + ", idAlojamiento=" +  + ']';
+//	    }
+
+		public boolean isAmoblado() {
+			return amoblado;
+		}
+
+		public void setAmoblado(boolean amoblado) {
+			this.amoblado = amoblado;
+		}
+
+		public int getTelefono() {
+			return telefono;
+		}
+
+		public void setTelefono(int telefono) {
+			this.telefono = telefono;
+		}
+
+		public int getPrecioNoche() {
+			return precioNoche;
+		}
+
+		public void setPrecioNoche(int precioNoche) {
+			this.precioNoche = precioNoche;
+		}
+
+		public String getUbicacion() {
+			return ubicacion;
+		}
+
+		public void setUbicacion(String ubicacion) {
+			this.ubicacion = ubicacion;
+		}
+
+		public String getTipoOferta() {
+			return tipoOferta;
+		}
+
+		public void setTipoOferta(String tipoOferta) {
+			this.tipoOferta = tipoOferta;
+		}
+
+		@Override
+		public String getNombre() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	      
 }

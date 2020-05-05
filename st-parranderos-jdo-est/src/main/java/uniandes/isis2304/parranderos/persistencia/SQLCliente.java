@@ -1,5 +1,6 @@
 package uniandes.isis2304.parranderos.persistencia;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -31,10 +32,10 @@ public class SQLCliente {
 	}
 	
 	
-	public long adicionarCliente (PersistenceManager pm, long idCliente, String nombre, String ubicacion, String tipooferta, String tipo) 
+	public long adicionarCliente (PersistenceManager pm, String documento, String nombre,String email, String ciudad, String contrasena, String genero, Date fechaNacimiento,String vinculacion) 
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaCliente () + "(id, nombre, ubicacion, tipooferta	, tipo) values (?, ?, ?, ?, ?)");
-        q.setParameters(idCliente, nombre, ubicacion, tipooferta, tipo);
+        q.setParameters(documento, nombre,email, ciudad, contrasena, genero, fechaNacimiento, vinculacion);
         return (long) q.executeUnique();
 	}
 

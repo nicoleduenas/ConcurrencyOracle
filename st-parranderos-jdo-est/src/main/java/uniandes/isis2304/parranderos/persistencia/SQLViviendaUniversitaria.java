@@ -31,10 +31,10 @@ public class SQLViviendaUniversitaria {
 	}
 	
 	
-	public long adicionarViviendaUniversitaria (PersistenceManager pm, long idViviendaUniversitaria, String nombre, String ubicacion, String tipooferta, String tipo) 
+	public long adicionarViviendaUniversitaria (PersistenceManager pm, long idAlojamiento,long idProveedor, Integer precioMes,char amoblado, Integer habitaciones, long telefono, String menaje, String tipoOferta) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaViviendaUniversitaria () + "(id, nombre, ubicacion, tipooferta	, tipo) values (?, ?, ?, ?, ?)");
-        q.setParameters(idViviendaUniversitaria, nombre, ubicacion, tipooferta, tipo);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaViviendaUniversitaria () + "(idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, menaje, tipoOferta) values (?, ?, ?,?,?,?, ?, ?)");
+        q.setParameters(idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, menaje, tipoOferta);
         return (long) q.executeUnique();
 	}
 

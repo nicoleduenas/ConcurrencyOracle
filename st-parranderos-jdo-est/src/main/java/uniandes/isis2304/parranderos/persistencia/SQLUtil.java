@@ -13,7 +13,7 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-package uniandes.isis2304.Alohandes.persistencia;
+package uniandes.isis2304.parranderos.persistencia;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -85,9 +85,8 @@ class SQLUtil
         Query qHotel = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHotel());
         Query qHostal = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHostal ());
         Query qViviUniversitaria = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaViviendaUniversitaria());
-        Query qHabitacionHotel = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHabitacionHotel());
-        Query qHabitacionHostal = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHabitacionHostal ());
-        Query qAptoSemestre = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaAptoSemestre ());
+        Query qHabitacion = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaHabitacion());
+       
         Query qAptoTemporada= pm.newQuery(SQL, "DELETE FROM " + pp.darTablaAptoTemporada());
         Query qEmpresa = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaEmpresa ());
         Query qPropietario = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaPropietario ());
@@ -98,19 +97,17 @@ class SQLUtil
         long alojamientosEliminadas = (long) qAlojamiento.executeUnique ();
         long proveedoresEliminadas = (long) qProveedor.executeUnique ();
         long serviciosBebidaEliminados = (long) qServicio.executeUnique ();
-        long habHotelEliminados = (long) qHabitacionHotel.executeUnique ();
+        long habEliminados = (long) qHabitacion.executeUnique ();
         long hostalesEliminados = (long) qHostal.executeUnique ();
         long hotelesEliminados = (long) qHotel.executeUnique ();
         long viviUniversitariasEliminados = (long) qViviUniversitaria.executeUnique ();
-        long habHostalEliminados = (long) qHabitacionHostal.executeUnique ();
-        long aptoSemEliminados = (long) qAptoSemestre.executeUnique ();
         long aptoTempEliminados = (long) qAptoTemporada.executeUnique ();
         long empresaEliminados = (long) qEmpresa.executeUnique ();
         long propietarioEliminados = (long) qPropietario.executeUnique ();
         return new long[] {clientesEliminados, reservasEliminados, alojamientosEliminadas
-        		, propietarioEliminados, serviciosBebidaEliminados, habHostalEliminados,
-        		habHotelEliminados, hotelesEliminados, hostalesEliminados, viviUniversitariasEliminados,
-        	    aptoSemEliminados, aptoTempEliminados, empresaEliminados, proveedoresEliminadas};
+        		, propietarioEliminados, serviciosBebidaEliminados, habEliminados
+        		, hotelesEliminados, hostalesEliminados, viviUniversitariasEliminados,
+        	     aptoTempEliminados, empresaEliminados, proveedoresEliminadas};
 	}
 
 }

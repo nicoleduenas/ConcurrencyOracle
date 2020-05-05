@@ -43,6 +43,10 @@ public class Propietario implements VOPropietario
 	 */
 	private int telefono;
 
+
+
+	private String nombre;
+
 	/* ****************************************************************
 	 * 			Métodos 
 	 *****************************************************************/
@@ -52,6 +56,7 @@ public class Propietario implements VOPropietario
 	public Propietario() 
     {
     	this.id = 0;
+    	this.setNombre("");
 		this.email = "";
 		this.telefono = 0;
 	}
@@ -64,9 +69,10 @@ public class Propietario implements VOPropietario
 	 * @param registrado - El registrado del bar (ALTO, MEDIO, BAJO)
 	 * @param telefono - Las sedes del bar (Mayor que 0)
 	 */
-    public Propietario(long id, String nombre, String email, Boolean registrado, int telefono) 
+    public Propietario(long id, String nombre, String email, int telefono) 
     {
     	this.id = id;
+    	this.setNombre(nombre);
 		this.email = email;
 		this.telefono = telefono;
 	}
@@ -130,6 +136,14 @@ public class Propietario implements VOPropietario
 	public String toString() 
 	{
 		return "Bar [id=" + id +  ", email=" + email +  ", telefono=" + telefono + "]";
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	

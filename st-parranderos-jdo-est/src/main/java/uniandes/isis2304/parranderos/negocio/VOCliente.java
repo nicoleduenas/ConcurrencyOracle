@@ -15,6 +15,7 @@
 
 package uniandes.isis2304.parranderos.negocio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface VOCliente
 	/**
 	 * @return El id del bebedor
 	 */
-	public long getId();
+	public long getDocumento();
 
 	/**
 	 * @return El nombre del bebedor
@@ -58,7 +59,7 @@ public interface VOCliente
 	/**
 	 * @return Las bebidasQueLeGustan al bebedor
 	 */
-	public List<Object[]> getReservas();
+	public ArrayList<Reserva> getReservas();
 
 	/**
 	 * @return Una cadena de caracteres con la información básica del bebedor

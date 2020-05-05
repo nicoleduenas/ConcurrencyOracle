@@ -3,7 +3,7 @@
 package uniandes.isis2304.parranderos.negocio;
 
 
-public class AptoTemporada  implements VOAptoTemporada
+public class AptoTemporada extends Alojamiento implements VOAptoTemporada
 {
 	/* **********************
 	 * 			Atributos
@@ -19,18 +19,26 @@ public class AptoTemporada  implements VOAptoTemporada
 
 	private String tipoOferta;
 	private Integer precioTemporada;
+
+
+	private int precio;
 	/* **********************
 	 * 			Métodos
 	 ***********************/
 
+
+	private String ubicacion;
+
 	public AptoTemporada() 
 	{
 		this.id = 0;
+		this.setPrecio(0);
+		this.habitaciones = 0;
 
 		this.menaje = "";
-		this.habitaciones = 0;
+		this.ubicacion = "";
+
 		this.tipoOferta = "";
-		this.setPrecioTemporada(0);
 	}
 
 	/**
@@ -101,6 +109,26 @@ public class AptoTemporada  implements VOAptoTemporada
 
 	public void setPrecioTemporada(Integer i) {
 		this.precioTemporada = i;
+	}
+
+	public int getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(int precio) {
+		this.precio = precio;
+	}
+
+	@Override
+	public String getTipo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUbicacion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

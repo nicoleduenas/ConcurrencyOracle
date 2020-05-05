@@ -46,7 +46,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-import uniandes.isis2304.parranderos.interfazApp.PanelDatos;
+
+import uniandes.isis2304.Alohandes.interfazApp.PanelDatos;
 import uniandes.isis2304.parranderos.negocio.Parranderos;
 import uniandes.isis2304.parranderos.negocio.VOBar;
 import uniandes.isis2304.parranderos.negocio.VOBebedor;

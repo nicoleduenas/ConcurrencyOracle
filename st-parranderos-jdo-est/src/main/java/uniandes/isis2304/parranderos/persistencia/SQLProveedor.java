@@ -31,10 +31,10 @@ public class SQLProveedor {
 	}
 	
 	
-	public long adicionarProveedor (PersistenceManager pm, long idProveedor, String nombre, String ubicacion, String tipooferta, String tipo) 
+	public long adicionarProveedor (PersistenceManager pm, long idProveedor, String tipo,String nombre) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProveedor () + "(id, nombre, ubicacion, tipooferta	, tipo) values (?, ?, ?, ?, ?)");
-        q.setParameters(idProveedor, nombre, ubicacion, tipooferta, tipo);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProveedor () + "(id, tipo, nombre) values (?, ?, ?)");
+        q.setParameters(idProveedor, tipo, nombre );
         return (long) q.executeUnique();
 	}
 
