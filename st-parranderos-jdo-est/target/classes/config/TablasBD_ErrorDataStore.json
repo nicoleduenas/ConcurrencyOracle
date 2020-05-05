@@ -1,15 +1,20 @@
 {
-	"title": "Nombres de las tablas de Parranderos Uniandes para pruebas de la aplicación cuando la base de datos no existe o está caida",
-	"unidadPersistencia": "ParranderosErrorDS",
+	"title": "Nombres de las tablas de Alohandes para pruebas de la aplicación cuando la base de datos no existe o está caida",
+	"unidadPersistencia": "AlohandesErrorDS",
 	"tablas":
 	[
-		"Parranderos_sequence",
-		"X_TIPOBEBIDA",
-		"X_BEBIDA",
-		"X_BAR",
-		"X_BEBEDOR",
-		"X_GUSTAN",
-		"X_SIRVEN",
-		"X_VISITAN"
+		"Alohandes_sequence",
+		"X_PROPIETARIO",
+		"X_EMPRESA",
+		"X_CLIENTE",
+		"X_ALOJAMIENTO",
+		"X_PROVEEDOR",
+		"X_SERVICIO",
+		"X_RESERVA",
+		"X_HOTEL",
+		"X_HOSTAL",
+		"X_HABITACIONHOTEL",
+		"X_APTOSEMESTRE",
+		"X_VIVIENDAUNIVERSITARIA"
 	]
 }

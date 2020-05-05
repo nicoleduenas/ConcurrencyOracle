@@ -110,7 +110,6 @@ public class PersistenciaAlohandes
 	private SQLPropietario sqlPropietario;
 	private SQLProveedor sqlProveedor;
 	private SQLReserva sqlReserva;
-	private SQLServicio sqlServicio;
 	private SQLViviendaUniversitaria sqlViviendaUniversitaria;
 	/**
 	 * Atributo para el acceso a la tabla BEBIDA de la base de datos
@@ -138,7 +137,6 @@ public class PersistenciaAlohandes
 		tablas.add ("HABITACION");
 		tablas.add ("VIVIENDAUNIVERSITARIA");
 		tablas.add ("APTOTEMPORADA");
-		tablas.add ("SERVICIO");
 		tablas.add ("HOSTAL");
 		tablas.add ("HOTEL");
 		tablas.add ("PROVEEDOR");
@@ -218,7 +216,6 @@ public class PersistenciaAlohandes
 	 */
 	private void crearClasesSQL ()
 	{
-		sqlServicio = new SQLServicio(this);
 		sqlAlojamiento = new SQLAlojamiento(this);
 		sqlCliente = new SQLCliente(this);
 		setSqlReserva(new SQLReserva(this));
@@ -376,7 +373,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Alojamiento adicionarAlojamiento(long idAlojamiento, String nombre, String ubicacion, String tipooferta)
+	public Alojamiento adicionarAlojamiento(long id, char habilitado, String nombre, String tipo, String servicios)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -384,23 +381,21 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlAlojamiento.adicionarAlojamiento(pm, idAlojamiento, nombre, tipooferta);
+			long tuplasInsertadas = sqlAlojamiento.adicionarAlojamiento(pm, id, habilitado, nombre, tipo, servicios);
 			tx.commit();
 
 			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Alojamiento() {
-
+				
 				@Override
 				public String getUbicacion() {
-					// TODO Auto-generated method stub
-					return ubicacion;
+					return null;
 				}
-
+				
 				@Override
 				public String getTipo() {
-					// TODO Auto-generated method stub
-					return tipooferta;
+					return tipo;
 				}
 			};
 		}
@@ -1093,90 +1088,7 @@ public class PersistenciaAlohandes
 		return sqlProveedor.darProveedorPorId (pmf.getPersistenceManager(), id);
 	}
 
-	/* ****************************************************************
-	 * 			Métodos para manejar SERVICIOS
-	 *****************************************************************/
-
-
-	public Servicio adicionarServicio(String nombre, long idAlojamiento)
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long idServicio = nextval ();
-			long tuplasInsertadas = sqlServicio.adicionarServicio(pm, idServicio, nombre, idAlojamiento);
-			tx.commit();
-
-			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
-
-			return new Servicio();
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return null;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-
-
-
-	public long eliminarServicioPorId (long idServicio) 
-	{
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx=pm.currentTransaction();
-		try
-		{
-			tx.begin();
-			long resp = sqlServicio.eliminarServicioPorId(pm, idServicio);
-			tx.commit();
-			return resp;
-		}
-		catch (Exception e)
-		{
-			//        	e.printStackTrace();
-			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
-			return -1;
-		}
-		finally
-		{
-			if (tx.isActive())
-			{
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-
-	public List<Servicio> darServicios ()
-	{
-		return sqlServicio.darServicios (pmf.getPersistenceManager());
-	}
-
-
-	public List<Servicio> darServicioPorNombre (String nombre)
-	{
-		return sqlServicio.darServiciosPorNombre (pmf.getPersistenceManager(), nombre);
-	}
-
-
-	public Servicio darServicioPorId (long idServicio)
-	{
-		return sqlServicio.darServicioPorId (pmf.getPersistenceManager(), idServicio);
-	}
-
+	
 
 
 	public long [] limpiarParranderos ()
