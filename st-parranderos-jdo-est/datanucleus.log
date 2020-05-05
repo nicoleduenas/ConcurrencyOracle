@@ -230,3 +230,11 @@ java.sql.SQLException: ORA-01017: invalid username/password; logon denied
 	at uniandes.isis2304.parranderos.interfazApp.InterfazParranderosApp.main(InterfazParranderosApp.java:647)
 17:49:21,697 (main) ERROR [DataNucleus.Datastore] - Exception thrown creating StoreManager : ORA-01017: invalid username/password; logon denied
 
+23:45:53,202 (main) DEBUG [DataNucleus.General] - Using PluginRegistry org.datanucleus.plugin.NonManagedPluginRegistry
+23:45:53,283 (main) DEBUG [DataNucleus.General] - Registering bundle org.datanucleus.api.jdo version 5.1.7 at URL file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/lib/datanucleus-api-jdo-5.1.7.jar.
+23:45:53,334 (main) DEBUG [DataNucleus.General] - Loading extension points and extensions from plug-in file jar:file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/lib/datanucleus-api-jdo-5.1.7.jar!/plugin.xml.
+23:45:53,349 (main) DEBUG [DataNucleus.General] - Registering bundle org.datanucleus version 5.1.10 at URL file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/lib/datanucleus-core-5.1.10.jar.
+23:45:53,353 (main) DEBUG [DataNucleus.General] - Loading extension points and extensions from plug-in file jar:file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/lib/datanucleus-core-5.1.10.jar!/plugin.xml.
+23:45:53,372 (main) DEBUG [DataNucleus.General] - Registering bundle org.datanucleus.store.rdbms version 5.1.10 at URL file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/lib/datanucleus-rdbms-5.1.10.jar.
+23:45:53,382 (main) DEBUG [DataNucleus.General] - Loading extension points and extensions from plug-in file jar:file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/lib/datanucleus-rdbms-5.1.10.jar!/plugin.xml.
+23:45:53,447 (main) DEBUG [DataNucleus.MetaData] - Parsing MetaData file "file:/Users/Nicole/Downloads/Iteracion2/st-parranderos-jdo-est/target/classes/META-INF/persistence.xml" using handler "persistence" (validation="false")

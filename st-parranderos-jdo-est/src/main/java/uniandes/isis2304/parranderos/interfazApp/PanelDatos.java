@@ -13,7 +13,7 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-package uniandes.isis2304.Alohandes.interfazApp;
+package uniandes.isis2304.parranderos.interfazApp;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
