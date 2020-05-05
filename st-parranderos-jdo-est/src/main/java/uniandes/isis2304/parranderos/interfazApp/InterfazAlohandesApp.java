@@ -1,6 +1,6 @@
 
 
-package uniandes.isis2304.Alohandes.interfazApp;
+package uniandes.isis2304.parranderos.interfazApp;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -492,11 +492,11 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar aptoTemporada", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar aptoTemporada", JOptionPane.QUESTION_MESSAGE));
 			String menaje = JOptionPane.showInputDialog (this, "menaje", "Adicionar aptoTemporada", JOptionPane.QUESTION_MESSAGE);
-			short precio = Short.parseShort(JOptionPane.showInputDialog (this, "precio mes", "Adicionar aptoTemporada", JOptionPane.QUESTION_MESSAGE));
+			Integer precio = Integer.parseInt(JOptionPane.showInputDialog (this, "precio mes", "Adicionar aptoTemporada", JOptionPane.QUESTION_MESSAGE));
 			Integer habitaciones = Integer.parseInt(JOptionPane.showInputDialog (this, "cantidad habitaciones", "Adicionar aptoTemporada", JOptionPane.QUESTION_MESSAGE));
 
 
-    		if (id > 0)
+    		if (idAlojamiento > 0 &idProveedor> 0&habitaciones> 0)
     		{
         		VOAptoTemporada tb = (VOAptoTemporada) alohandes.adicionarAptoTemporada(idAlojamiento, idProveedor, precio, menaje, habitaciones);
         		if (tb == null)
@@ -670,7 +670,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 			
     		if (idHotel > 0 &idAlojamiento > 0&precioNoche> 0&capacidad> 0)
     		{
-    			VOHabitacion tb = (VOHabitacion) alohandes.adicionarHabitacion(idHotel,idAlojamiento, precioNoche, capacidad, tipoOferta);
+    			VOHabitacion tb = (VOHabitacion) alohandes.adicionarHabitacion(idAlojamiento,  precioNoche, capacidad, tipoOferta, idHotel);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear un Habitacion con nit: " + idAlojamiento);
@@ -1159,14 +1159,14 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     	{
 			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Alojamiento", JOptionPane.QUESTION_MESSAGE));
 			String nombre = (JOptionPane.showInputDialog (this, "nombre", "Adicionar Alojamiento", JOptionPane.QUESTION_MESSAGE));
-			String ubicacion = (JOptionPane.showInputDialog (this, "ubicacion", "Adicionar Alojamiento", JOptionPane.QUESTION_MESSAGE));
 			String tipo= (JOptionPane.showInputDialog (this, "costo", "Adicionar Alojamiento", JOptionPane.QUESTION_MESSAGE));
-			String tipoOferta = (JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar Alojamiento", JOptionPane.QUESTION_MESSAGE));
-			
+			String servicios = (JOptionPane.showInputDialog (this, "servicios", "Adicionar Alojamiento", JOptionPane.QUESTION_MESSAGE));
+			char habilitado = JOptionPane.showInputDialog (this,"está habilitado?", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE).charAt(0);
+
 			
     		if (id > 0)
     		{
-        		VOAlojamiento tb = (VOAlojamiento) alohandes.adicionarAlojamiento(id,nombre, ubicacion, tipoOferta, tipo);
+        		VOAlojamiento tb = (VOAlojamiento) alohandes.adicionarAlojamiento(id,habilitado,nombre, tipo, servicios);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear un alojamiento con nombre: " + id);
@@ -1387,18 +1387,19 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
 			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
-			long precioMes = Long.parseLong(JOptionPane.showInputDialog (this, "precio mes", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
+			Integer precioMes = Integer.parseInt(JOptionPane.showInputDialog (this, "precio mes", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
 			char amoblado = JOptionPane.showInputDialog (this, "amoblado??", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE).charAt(0);
 			Integer habitaciones = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE));
 			String tipoOferta = JOptionPane.showInputDialog (this, "tipo oferta", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE);
+			String menaje = JOptionPane.showInputDialog (this, "menaje", "Adicionar Vivienda Universitaria", JOptionPane.QUESTION_MESSAGE);
 
 
     		if (idAlojamiento > 0 & amoblado==('1')|amoblado==('0')&idProveedor > 0 )
     		{
-        		VOViviendaUniversitaria tb = (VOViviendaUniversitaria)alohandes.adicionarViviendaUniversitaria(idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, tipoOferta);
+        		VOViviendaUniversitaria tb = (VOViviendaUniversitaria)alohandes.adicionarViviendaUniversitaria(idAlojamiento, idProveedor, precioMes, amoblado, habitaciones,telefono, menaje, tipoOferta);
         		if (tb == null)
         		{
-        			throw new Exception ("No se pudo crear un viviendaUniversitaria con nombre: " + nombre);
+        			throw new Exception ("No se pudo crear un viviendaUniversitaria con id de alojamiento: " + idAlojamiento);
         		}
         		String resultado = "En adicionarViviendaUniversitaria\n\n";
         		resultado += "ViviendaUniversitaria adicionado exitosamente: " + tb;
@@ -1551,14 +1552,13 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		String email = JOptionPane.showInputDialog (this, "email", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
 			String vinculacion= JOptionPane.showInputDialog (this, "vinculacion", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
 			long cedula = Long.parseLong(JOptionPane.showInputDialog (this, "documento", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
-			String nombre = JOptionPane.showInputDialog (this, "Nombre", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE);
 			long telefono = Long.parseLong(JOptionPane.showInputDialog (this, "telefono", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Propietario", JOptionPane.QUESTION_MESSAGE));
 
 
-			if (nombre != null&&!nombre.equals("")&& vinculacion!= null)
+			if (cedula>0&idProveedor >0& vinculacion!= null)
     		{
-        		VOPropietario tb = (VOPropietario) alohandes.adicionarPropietario(cedula, nombre, idProveedor, email, telefono, vinculacion);
+        		VOPropietario tb = (VOPropietario) alohandes.adicionarPropietario(cedula, idProveedor, email, telefono, vinculacion);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear una persona natural con operador: " + cedula);
@@ -1672,72 +1672,8 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 		}
     }
     
-    public void buscarPropietarioPorNombre( )
-    {
-    	try 
-    	{
-    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del propietario?", "Buscar propietario por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombreTb != null)
-    		{
-    			VOPropietario propietario = (VOPropietario) alohandes.darPropietariosPorNombre (nombreTb);
-    			String resultado = "En buscar propietario por nombre\n\n";
-    			if (propietario != null)
-    			{
-        			resultado += "El propietario es: " + propietario;
-    			}
-    			else
-    			{
-        			resultado += "Un propietario con nombre: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el propietario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
     
-    /**
-     * Borra de la base de datos el cliente con el nombre dado po el cliente
-     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarPropietarioPorNombre( )
-    {
-    	try 
-    	{
-    		String nombre = JOptionPane.showInputDialog (this, "nombre del propietario?", "Borrar propietario por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombre != null)
-    		{
-//    			long idTipo = Long.valueOf (nombre);
-    			long tbEliminados = alohandes.eliminarPropietarioPorNombre(nombre);
 
-    			String resultado = "En eliminar Propietario\n\n";
-    			resultado += tbEliminados + " propietarios eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el propietario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
-    
     //
     //
     //
@@ -1780,19 +1716,21 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 			Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 			Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 			Timestamp fechaConfirmacion = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de confirmacion", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-			long cedula = Long.parseLong(JOptionPane.showInputDialog (this, "Cedula", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 			Integer cantPagos = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 			Integer descuento = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 			long idCliente = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
     		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 			Integer precioTotal = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer personas = Integer.parseInt(JOptionPane.showInputDialog (this, "personas", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
 
-    		if (cedula >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
+			
+    		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
     		{
-        		VOReserva tb = (VOReserva) alohandes.adicionarReserva(idAlojamiento, descuento,precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cedula, cantPagos, idCliente);
+        		VOReserva tb = (VOReserva) alohandes.adicionarReserva(id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
         		if (tb == null)
         		{
-        			throw new Exception ("No se pudo crear una reserva para el usuario: " + cedula);
+        			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
         		}
         		String resultado = "En adicionarReserva\n\n";
         		resultado += "Reserva adicionada exitosamente: " + tb;
@@ -1876,7 +1814,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		Long nombreTb = Long.parseLong(JOptionPane.showInputDialog (this, "id del de la reserva?", "Buscar reserva por usuario", JOptionPane.QUESTION_MESSAGE));
     		if (nombreTb > 0)
     		{
-    			VOReserva reserva = (VOReserva) alohandes.darReservaPoCliente(nombreTb);
+    			VOReserva reserva = (VOReserva) alohandes.darReservasPorCliente(nombreTb);
     			String resultado = "En buscar reserva por cliente\n\n";
     			if (reserva != null)
     			{
@@ -1913,7 +1851,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		long Id = Integer.parseInt(JOptionPane.showInputDialog (this, "Id de la reserva?", "Buscar reserva por Id", JOptionPane.QUESTION_MESSAGE));
     		if (Id > 0)
     		{
-    			VOReserva reserva = (VOReserva) alohandes.darReservaPorId(Id);
+    			VOReserva reserva = (VOReserva) alohandes.darReservasPorId(Id);
     			String resultado = "En buscar reserva por id\n\n";
     			if (reserva != null)
     			{
@@ -2011,17 +1949,16 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     	try 
     	{
     		long nit = Long.parseLong(JOptionPane.showInputDialog (this, "nit", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
-			String nombre = (JOptionPane.showInputDialog (this, "nombre", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
 			String email = (JOptionPane.showInputDialog (this, "email", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
 			long idProveedor = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE));
 			char registrado = JOptionPane.showInputDialog (this,"está registrada?", "Adicionar Empresa", JOptionPane.QUESTION_MESSAGE).charAt(0);
 
-    		if (nit >0& nombre !=null& registrado==('1')|registrado==('0')&!nombre.equals("")& idProveedor>0)
+    		if (nit >0 & registrado==('1')|registrado==('0')&& idProveedor>0)
     		{
-        		VOEmpresa tb = (VOEmpresa)alohandes.adicionarEmpresa(nit, nombre, email,idProveedor,registrado);
+        		VOEmpresa tb = (VOEmpresa)alohandes.adicionarEmpresa(nit,  email,idProveedor,registrado);
         		if (tb == null)
         		{
-        			throw new Exception ("No se pudo crear una empresa con operador: " + operador);
+        			throw new Exception ("No se pudo crear una empresa con operador: " + idProveedor);
         		}
         		String resultado = "En adicionarEmpresa\n\n";
         		resultado += "Empresa adicionada exitosamente: " + tb;
@@ -2131,71 +2068,9 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 		}
     }
     
-    public void buscarEmpresaPorNombre( )
-    {
-    	try 
-    	{
-    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del propietario?", "Buscar propietario por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombreTb != null)
-    		{
-    			VOEmpresa Empresa = (VOEmpresa) alohandes.darEmpresasPorNombre (nombreTb);
-    			String resultado = "En buscar propietario por nombre\n\n";
-    			if (Empresa != null)
-    			{
-        			resultado += "El propietario es: " + Empresa;
-    			}
-    			else
-    			{
-        			resultado += "Un propietario con nombre: " + nombreTb + " NO EXISTE\n";
-    			}
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el propietario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
+   
     
-    /**
-     * Borra de la base de datos el cliente con el nombre dado po el cliente
-     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
-     */
-    public void eliminarEmpresaPorNombre( )
-    {
-    	try 
-    	{
-    		String nombre = JOptionPane.showInputDialog (this, "nombre del propietario?", "Borrar propietario por nombre", JOptionPane.QUESTION_MESSAGE);
-    		if (nombre != null)
-    		{
-//    			long idTipo = Long.valueOf (nombre);
-    			long tbEliminados = alohandes.eliminarEmpresaPorNombre(nombre);
-
-    			String resultado = "En eliminar Empresa\n\n";
-    			resultado += tbEliminados + " propietarios eliminados\n";
-    			resultado += "\n Operación terminada";
-    			panelDatos.actualizarInterfaz(resultado);
-    		}
-    		else
-    		{
-    			panelDatos.actualizarInterfaz("Operación cancelada por el propietario");
-    		}
-		} 
-    	catch (Exception e) 
-    	{
-//			e.printStackTrace();
-			String resultado = generarMensajeError(e);
-			panelDatos.actualizarInterfaz(resultado);
-		}
-    }
-    
+  
     
     //
     //
@@ -2222,19 +2097,17 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     {
     	try 
     	{
-			long operador = Long.parseLong(JOptionPane.showInputDialog (this, "operador", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
-			short restaurante = Short.parseShort(JOptionPane.showInputDialog (this, "cobra restaurante??", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
-			short estudio = Short.parseShort(JOptionPane.showInputDialog (this, "cobra estudio??", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
-			short esparcimiento = Short.parseShort(JOptionPane.showInputDialog (this, "cobra zona de esparcimiento??", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
-			short gimnasio = Short.parseShort(JOptionPane.showInputDialog (this, "cobra gimnasio??", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
+			long id = Long.parseLong(JOptionPane.showInputDialog (this, "documento del proveedor(nit o cedula)", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
+			String tipo = (JOptionPane.showInputDialog (this, "tipo", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
+			String nombre = (JOptionPane.showInputDialog (this, "nombre", "Adicionar proveedor", JOptionPane.QUESTION_MESSAGE));
 
 
-    		if (operador > 0)
+    		if (id > 0)
     		{
-        		VOProveedor tb = (VOProveedor) alohandes.adicionarProveedor(operador, restaurante, estudio, esparcimiento, gimnasio);
+        		VOProveedor tb = (VOProveedor) alohandes.adicionarProveedor(id, tipo, nombre);
         		if (tb == null)
         		{
-        			throw new Exception ("No se pudo crear una proveedor con operador: " + operador);
+        			throw new Exception ("No se pudo crear una proveedor con operador: " + id);
         		}
         		String resultado = "En adicionarProveedor\n\n";
         		resultado += "Proveedor adicionada exitosamente: " + tb;
@@ -2347,6 +2220,74 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 			panelDatos.actualizarInterfaz(resultado);
 		}
     }
+    
+    
+    /**
+     * Borra de la base de datos el cliente con el nombre dado po el cliente
+     * Cuando dicho cliente no existe, se indica que se borraron 0 registros de la base de datos
+     */
+    public void eliminarProveedorPorNombre( )
+    {
+    	try 
+    	{
+    		String nombre = JOptionPane.showInputDialog (this, "nombre del proveedor?", "Borrar proveedor por nombre", JOptionPane.QUESTION_MESSAGE);
+    		if (nombre != null)
+    		{
+//    			long idTipo = Long.valueOf (nombre);
+    			long tbEliminados = alohandes.eliminarProveedoresPorNombre(nombre);
+
+    			String resultado = "En eliminar Proveedor\n\n";
+    			resultado += tbEliminados + " proveedors eliminados\n";
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el proveedor");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    public void buscarProveedorPorNombre( )
+    {
+    	try 
+    	{
+    		String nombreTb = JOptionPane.showInputDialog (this, "Nombre del proveedor?", "Buscar proveedor por nombre", JOptionPane.QUESTION_MESSAGE);
+    		if (nombreTb != null)
+    		{
+    			VOProveedor proveedor = (VOProveedor) alohandes.darProveedoresPorNombre (nombreTb);
+    			String resultado = "En buscar proveedor por nombre\n\n";
+    			if (proveedor != null)
+    			{
+        			resultado += "El proveedor es: " + proveedor;
+    			}
+    			else
+    			{
+        			resultado += "Un proveedor con nombre: " + nombreTb + " NO EXISTE\n";
+    			}
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el propietario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    
 
     
     
@@ -2525,16 +2466,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
         return resp;
 	}
     
-    private String listarAptoSemestre(List<AptoSemestre> lista)
-    {
-    	String resp = "los aptoSemestres existentes son:\n";
-    	int i = 1;
-        for (AptoSemestre tb : lista)
-        {
-        	resp += i++ + ". " + tb.toString() + "\n";
-        }
-        return resp;
-	}
+  
     private String listarAptoTemporada(List<AptoTemporada> lista)
     {
     	String resp = "los aptoSemestres existentes son:\n";
@@ -2546,16 +2478,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
         return resp;
 	}
     
-    private String listarServicios(List<Servicio> lista)
-    {
-    	String resp = "los servicios existentes son:\n";
-    	int i = 1;
-        for (Servicio tb : lista)
-        {
-        	resp += i++ + ". " + tb.toString() + "\n";
-        }
-        return resp;
-	}
+    
     
     private String listarHabitacion(List<Habitacion> lista)
     {
@@ -2567,16 +2490,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
         }
         return resp;
 	}
-    private String listarHostalHabitacion(List<HostalHabitacion> lista)
-    {
-    	String resp = "las habitaciones existentes son:\n";
-    	int i = 1;
-        for (HostalHabitacion tb : lista)
-        {
-        	resp += i++ + ". " + tb.toString() + "\n";
-        }
-        return resp;
-	}
+    
     
     private String listarHostal(List<Hostal> lista)
     {

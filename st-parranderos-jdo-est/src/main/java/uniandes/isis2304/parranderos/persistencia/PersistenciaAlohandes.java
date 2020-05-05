@@ -43,6 +43,7 @@ import uniandes.isis2304.parranderos.negocio.Hostal;
 import uniandes.isis2304.parranderos.negocio.Hotel;
 import uniandes.isis2304.parranderos.negocio.Propietario;
 import uniandes.isis2304.parranderos.negocio.Proveedor;
+import uniandes.isis2304.parranderos.negocio.Reserva;
 import uniandes.isis2304.parranderos.negocio.Servicio;
 
 /**
@@ -377,7 +378,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Alojamiento adicionarAlojamiento(long idAlojamiento, String nombre, String ubicacion, String tipooferta)
+	public Alojamiento adicionarAlojamiento(long id, char habilitado, String nombre, String tipo, String servicios)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -385,7 +386,7 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlAlojamiento.adicionarAlojamiento(pm, idAlojamiento, nombre, tipooferta);
+			long tuplasInsertadas = sqlAlojamiento.adicionarAlojamiento(pm, id, habilitado, nombre, tipo , servicios);
 			tx.commit();
 
 			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -468,7 +469,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public AptoTemporada adicionarAptoTemporada(long id, int precio, int habitaciones, String menaje,String ubicacion, String tipoOferta)
+	public AptoTemporada adicionarAptoTemporada(long idAlojamiento,  long idProveedor, Integer precio, String menaje, Integer habitaciones)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -476,7 +477,7 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlAptoTemporada.adicionarAptoTemporada(pm, id, precio, menaje, habitaciones, ubicacion, tipoOferta);
+			long tuplasInsertadas = sqlAptoTemporada.adicionarAptoTemporada(pm, idAlojamiento, idProveedor, precio, menaje, habitaciones);
 			tx.commit();
 
 			log.trace ("Inserción de aptotemporada " + id + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -623,7 +624,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Empresa adicionarEmpresa(String id, String nombre, String email )
+	public Empresa adicionarEmpresa(long nit,  String correo, long idProveedor, char registrado )
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -631,10 +632,10 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlEmpresa.adicionarEmpresa(pm, id, nombre, email);
+			long tuplasInsertadas = sqlEmpresa.adicionarEmpresa(pm,nit,  correo,idProveedor,registrado);
 			tx.commit();
 
-			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserción de empresa: " + nit + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Empresa();
 		}
@@ -654,7 +655,36 @@ public class PersistenciaAlohandes
 		}
 	}
 
+	public Reserva adicionarReserva(long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            long tuplasInsertadas = sqlReserva.adicionarReserva (pmf.getPersistenceManager(), id, idAlojamiento, descuento, personas, precioTotal,
+            		fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+    		tx.commit();
 
+            log.trace ("Inserción de reservas: [" + id + tuplasInsertadas + " tuplas insertadas");
+
+            return new Reserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
 
 
 	public long eliminarEmpresaPorId (long id) 
@@ -705,7 +735,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Habitacion adicionarHabitacion(String id,String horario, int precioNoche, int capacidad, String tipoOferta)
+	public Habitacion adicionarHabitacion(long idAlojamiento, int precioNoche, int capacidad, String tipoOferta, long idHotel)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -713,10 +743,10 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlHabitacion.adicionarHabitacion(pm, id, horario, precioNoche, capacidad, tipoOferta);
+			long tuplasInsertadas = sqlHabitacion.adicionarHabitacion(pm, idAlojamiento,  precioNoche, capacidad, tipoOferta, idHotel);
 			tx.commit();
 
-			log.trace ("Inserción de tipo de bebida: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+			log.trace ("Inserción de tipo de bebida: " + idAlojamiento + ": " + tuplasInsertadas + " tuplas insertadas");
 
 			return new Habitacion();
 		}
@@ -783,7 +813,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Hostal adicionarHostal(long idHostal, String nombre, String ubicacion, String horario, int telefono)
+	public Hostal adicionarHostal(long idHostal, String nombre, String horario,String ubicacion, String email, long idProveedor, long telefono)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -791,7 +821,7 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlHostal.adicionarHostal(pm, idHostal, nombre, ubicacion, horario, telefono);
+			long tuplasInsertadas = sqlHostal.adicionarHostal(pm, idHostal, nombre, horario,email, ubicacion, idProveedor, telefono);
 			tx.commit();
 
 			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -862,7 +892,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Hotel adicionarHotel(long idHotel, String nombre, String ubicacion, String horario, int telefono)
+	public Hotel adicionarHotel (long idHotel, String nombre, String ubicacion, String email, long idProveedor, long telefono)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -870,7 +900,7 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlHotel.adicionarHotel(pm, idHotel, nombre, ubicacion, horario, telefono);
+			long tuplasInsertadas = sqlHotel.adicionarHotel(pm, idHotel, nombre, ubicacion, email, idProveedor, telefono);
 			tx.commit();
 
 			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -940,7 +970,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Propietario adicionarPropietario(String idPropietario,String tipo, String nombre, int telefono )
+	public Propietario adicionarPropietario(long cedula,  long idProveedor, String email, long telefono, String vinculacion )
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -948,7 +978,7 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlPropietario.adicionarPropietario(pm, idPropietario, tipo, nombre, telefono);
+			long tuplasInsertadas = sqlPropietario.adicionarPropietario(pm,cedula,  idProveedor, email, telefono, vinculacion);
 			tx.commit();
 
 			log.trace ("Inserción de tipo de bebida: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -1019,7 +1049,7 @@ public class PersistenciaAlohandes
 	 *****************************************************************/
 
 
-	public Proveedor adicionarProveedor(String idProveedor,String tipo, String nombre )
+	public Proveedor adicionarProveedor(long idProveedor,String tipo, String nombre )
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();

@@ -32,10 +32,11 @@ public class SQLReserva {
 	}
 	
 	
-	public long adicionarReserva (PersistenceManager pm, String idReserva, Date fechaConfirmacion, String fechaCheckin, String fechaCheckout, int precioTotal) 
+	public long adicionarReserva (PersistenceManager pm, long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReserva () + "(id, fechaConfirmacion, fechaCheckin, fechaCheckout, precioTotal) values (?, ?, ?, ?, ?)");
-        q.setParameters(idReserva, fechaConfirmacion, fechaCheckin, fechaCheckout, precioTotal);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReserva () + "(id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente) values (?, ?, ?, ?, ?,?, ?, ?, ?, ?)");
+        q.setParameters(id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
         return (long) q.executeUnique();
 	}
 

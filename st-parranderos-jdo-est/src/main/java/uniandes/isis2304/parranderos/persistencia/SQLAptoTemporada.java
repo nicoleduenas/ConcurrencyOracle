@@ -64,10 +64,10 @@ class SQLAptoTemporada
 	 * Crea y ejecuta la sentencia SQL para adicionar un AptoTemporada a la base de datos de Parranderos
 
 	 */
-	public long adicionarAptoTemporada (PersistenceManager pm, long id, Integer precio, String habitaciones, Integer menaje, String ubicacion, String tipoOferta) 
+	public long adicionarAptoTemporada (PersistenceManager pm, long idAlojamiento, long idProveedor, Integer precio, Integer habitaciones, String menaje) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaAptoTemporada () + "(id, precio, habitaciones, menaje, ubicacion, tipoOferta) values (?, ?, ?, ?, ?)");
-        q.setParameters(id, precio, menaje, habitaciones);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaAptoTemporada () + "(idAlojamiento, precio, habitaciones, menaje, idProveedor) values (?, ?, ?, ?, ?)");
+        q.setParameters(idAlojamiento, precio, habitaciones, menaje, idProveedor);
         return (long) q.executeUnique();
 	}
 //
