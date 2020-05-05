@@ -5,27 +5,265 @@
 	"bannerPath": "./src/main/resources/config/logo.png",
 	"menuBar":
 	[
-		{ "menuTitle": "TipoBebida",
+		{ "menuTitle": "AptoTemporada",
 		  "options":
 			[
 				{
 					"label": "Adicionar",
-					"event": "adicionarTipoBebida"
+					"event": "adicionarAptoTemporada"
 				},
 				{
 					"label": "Listar",
-					"event": "listarTipoBebida"
+					"event": "listarAptoTemporada"
 				},
 				{
 					"label": "Borrar por Id",
-					"event": "eliminarTipoBebidaPorId"
+					"event": "eliminarAptoTemporadaPorId"
 				},
 				{
-					"label": "Buscar por Nombre",
-					"event": "buscarTipoBebidaPorNombre"
+					"label": "Buscar por Id",
+					"event": "buscarAptoTemporadaPorId"
+				}
+	
+			]
+		},
+		{ "menuTitle": "Habitacion",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarHabitacion"
+				},
+				{
+					"label": "Listar",
+					"event": "listarHabitacion"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarHabitacionPorId"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarHabitacionPorId"
 				}
 			]
 		},
+		{ "menuTitle": "ViviendaUniversitaria",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarViviendaUniversitaria"
+				},
+				{
+					"label": "Listar",
+					"event": "listarViviendaUniversitaria"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarViviendaUniversitariaPorId"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarViviendaUniversitariaPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Cliente",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarCliente"
+				},
+				{
+					"label": "Listar",
+					"event": "listarCliente"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarClientePorId"
+				},
+				{
+					"label": "Buscar por Nombre",
+					"event": "buscarClientePorNombre"
+				},
+				{
+					"label": "Borrar por Nombre",
+					"event": "eliminarClientePorNombre"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarClientePorId"
+				}
+			]
+		},
+		{ "menuTitle": "Reserva",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarReserva"
+				},
+				{
+					"label": "Listar",
+					"event": "listarReserva"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarReservaPorId"
+				},
+				{
+					"label": "Buscar por Cliente",
+					"event": "buscarReservaPorCliente"
+				},
+				{
+					"label": "Borrar por Cliente",
+					"event": "eliminarReservaPorCliente"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarReservaPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Alojamiento",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarAlojamiento"
+				},
+				{
+					"label": "Listar",
+					"event": "listarAlojamiento"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarAlojamientoPorId"
+				},
+				{
+					"label": "Buscar por Nombre",
+					"event": "buscarAlojamientoPorNombre"
+				},
+				{
+					"label": "Borrar por Nombre",
+					"event": "eliminarAlojamientoPorNombre"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarAlojamientoPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Hotel",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarHotel"
+				},
+				{
+					"label": "Listar",
+					"event": "listarHotel"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarHotelPorId"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarHotelPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Hostal",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarHostal"
+				},
+				{
+					"label": "Listar",
+					"event": "listarHostal"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarHostalPorId"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarHostalPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Proveedor",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarProveedor"
+				},
+				{
+					"label": "Listar",
+					"event": "listarProveedor"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarProveedorPorId"
+				},
+				{
+					"label": "Buscar por Id",
+					"event": "buscarProveedorPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Propietario",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarPropietario"
+				},
+				{
+					"label": "Listar",
+					"event": "listarPropietario"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarPropietarioPorId"
+				},
+				
+				{
+					"label": "Buscar por Id",
+					"event": "buscarPropietarioPorId"
+				}
+			]
+		},
+		{ "menuTitle": "Empresa",
+		  "options":
+			[
+				{
+					"label": "Adicionar",
+					"event": "adicionarEmpresa"
+				},
+				{
+					"label": "Listar",
+					"event": "listarEmpresa"
+				},
+				{
+					"label": "Borrar por Id",
+					"event": "eliminarEmpresaPorId"
+				},
+				
+				{
+					"label": "Buscar por Id",
+					"event": "buscarEmpresaPorId"
+				}
+			]
+		},
+		
 		{ "menuTitle": "Mantenimiento",
 		  "options":
 			[
