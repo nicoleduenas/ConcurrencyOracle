@@ -754,101 +754,101 @@ public class Alohandes
 //
 //
 //	//*****************************************************************/
-//	/**
-//	 * Adiciona de manera persistente una Alojamiento 
-//	 * Adiciona entradas al log de la aplicaci√≥n
-//	 * @param personas 
-//	 * @param nombre - El nombre la Alojamiento
-//	 * @param idServicio - El identificador del Servicio de la Alojamiento - Debe existir un Servicio con este identificador
-//	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
-//	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
-//	 */
-//	public Reserva adicionarReserva (long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
-//			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente)
-//	{
-//		log.info ("Adicionando Reserva " );
-//		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
-//		log.info ("Adicionando Reserva: " + Reserva);
-//		return Reserva;
-//	}
-//
-//	/**
-//	 * Elimina una Reserva por su nombre
-//	 * Adiciona entradas al log de la aplicaci√≥n
-//	 * @param nombre - El nombre de la Reserva a eliminar
-//	 * @return El n√∫mero de tuplas eliminadas
-//	 */
-//	public long eliminarReservaPorCliente (long idCliente)
-//	{
-//		log.info ("Eliminando Reserva por cliente: " + idCliente);
-//		long resp = pp.eliminarReservaPorCliente (idCliente);
-//		log.info ("Eliminando Reserva por cliente: " + resp + " tuplas eliminadas");
-//		return resp;
-//	}
-//
-//	/**
-//	 * Elimina una Reserva por su identificador
-//	 * Adiciona entradas al log de la aplicaci√≥n
-//	 * @param idReserva - El identificador de la Reserva a eliminar
-//	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
-//	 */
-//	public long eliminarReservaPorId (long idReserva)
-//	{
-//		log.info ("Eliminando Reserva por id: " + idReserva);
-//		long resp = pp.eliminarReservaPorId (idReserva);
-//		log.info ("Eliminando Reserva por id: " + resp + " tuplas eliminadas");
-//		return resp;
-//	}
-//
-//	/**
-//	 * Encuentra todas las Reserva en Alohandes
-//	 * Adiciona entradas al log de la aplicaci√≥n
-//	 * @return Una lista de objetos Reserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-//	 */
-//	public List<Reserva> darReservas ()
-//	{
-//		log.info ("Consultando Reservas");
-//		List<Reserva> Reservas = pp.darReservas ();	
-//		log.info ("Consultando Reservas: " + Reservas.size() + " Reservas existentes");
-//		return Reservas;
-//	}
-//
-//	/**
-//	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
-//	 * Adiciona entradas al log de la aplicaci√≥n
-//	 * @return Una lista de objetos VOReserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
-//	 */
-//	public List<VOReserva> darVOReservas ()
-//	{
-//		log.info ("Generando los VO de las Reservas");       
-//		List<VOReserva> voReservas = new LinkedList<VOReserva> ();
-//		for (Reserva beb : pp.darReservas ())
-//		{
-//			voReservas.add (beb);
-//		}
-//		log.info ("Generando los VO de las Reservas: " + voReservas.size() + " existentes");
-//		return voReservas;
-//	}
-//
-//	/**
-//	 * Elimina las Reservas que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-//	 * Adiciona entradas al log de la aplicaci√≥n
-//	 * @return El n√∫mero de Reservas eliminadas
-//	 */
-//	public Reserva  darReservasPorCliente(long cliente)
-//	{
-//		log.info ("Buscando Reserva por cliente: " + cliente);
-//		List<Reserva> tb = pp.darReservaPorCliente (cliente);
-//		return !tb.isEmpty () ? tb.get (0) : null;
-//	}
-//
-//	public Reserva darReservasPorId(long id)
-//	{
-//		log.info ("Dar informaci√≥n de un proveedor por id: " + id);
-//		Reserva reserva = pp.darReservaPorId (id);
-//		log.info ("Buscando reserva por Id: " + reserva != null ? reserva : "NO EXISTE");
-//		return reserva;
-//	}
+	/**
+	 * Adiciona de manera persistente una Alojamiento 
+	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @param personas 
+	 * @param nombre - El nombre la Alojamiento
+	 * @param idServicio - El identificador del Servicio de la Alojamiento - Debe existir un Servicio con este identificador
+	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
+	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
+	 */
+	public Reserva adicionarReserva (long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente)
+	{
+		log.info ("Adicionando Reserva " );
+		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+		log.info ("Adicionando Reserva: " + Reserva);
+		return Reserva;
+	}
+
+	/**
+	 * Elimina una Reserva por su nombre
+	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @param nombre - El nombre de la Reserva a eliminar
+	 * @return El n√∫mero de tuplas eliminadas
+	 */
+	public long eliminarReservaPorCliente (long idCliente)
+	{
+		log.info ("Eliminando Reserva por cliente: " + idCliente);
+		long resp = pp.eliminarReservaPorCliente (idCliente);
+		log.info ("Eliminando Reserva por cliente: " + resp + " tuplas eliminadas");
+		return resp;
+	}
+
+	/**
+	 * Elimina una Reserva por su identificador
+	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @param idReserva - El identificador de la Reserva a eliminar
+	 * @return El n√∫mero de tuplas eliminadas (1 o 0)
+	 */
+	public long eliminarReservaPorId (long idReserva)
+	{
+		log.info ("Eliminando Reserva por id: " + idReserva);
+		long resp = pp.eliminarReservaPorId (idReserva);
+		log.info ("Eliminando Reserva por id: " + resp + " tuplas eliminadas");
+		return resp;
+	}
+
+	/**
+	 * Encuentra todas las Reserva en Alohandes
+	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @return Una lista de objetos Reserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+	 */
+	public List<Reserva> darReservas ()
+	{
+		log.info ("Consultando Reservas");
+		List<Reserva> Reservas = pp.darReservas ();	
+		log.info ("Consultando Reservas: " + Reservas.size() + " Reservas existentes");
+		return Reservas;
+	}
+
+	/**
+	 * Encuentra todos los Servicios en Alohandes y los devuelve como una lista de VOServicio
+	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @return Una lista de objetos VOReserva con todos las Reservas que conoce la aplicaci√≥n, llenos con su informaci√≥n b√°sica
+	 */
+	public List<VOReserva> darVOReservas ()
+	{
+		log.info ("Generando los VO de las Reservas");       
+		List<VOReserva> voReservas = new LinkedList<VOReserva> ();
+		for (Reserva beb : pp.darReservas ())
+		{
+			voReservas.add (beb);
+		}
+		log.info ("Generando los VO de las Reservas: " + voReservas.size() + " existentes");
+		return voReservas;
+	}
+
+	/**
+	 * Elimina las Reservas que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
+	 * Adiciona entradas al log de la aplicaci√≥n
+	 * @return El n√∫mero de Reservas eliminadas
+	 */
+	public Reserva  darReservasPorCliente(long cliente)
+	{
+		log.info ("Buscando Reserva por cliente: " + cliente);
+		List<Reserva> tb = pp.darReservaPorCliente (cliente);
+		return !tb.isEmpty () ? tb.get (0) : null;
+	}
+
+	public Reserva darReservasPorId(long id)
+	{
+		log.info ("Dar informaci√≥n de un proveedor por id: " + id);
+		Reserva reserva = pp.darReservaPorId (id);
+		log.info ("Buscando reserva por Id: " + reserva != null ? reserva : "NO EXISTE");
+		return reserva;
+	}
 //
 
 

@@ -42,6 +42,7 @@ import uniandes.isis2304.parranderos.negocio.Hostal;
 import uniandes.isis2304.parranderos.negocio.Hotel;
 import uniandes.isis2304.parranderos.negocio.Propietario;
 import uniandes.isis2304.parranderos.negocio.Proveedor;
+import uniandes.isis2304.parranderos.negocio.Reserva;
 
 /**
  * Clase para el manejador de persistencia del proyecto Parranderos
@@ -1117,6 +1118,81 @@ public class PersistenciaAlohandes
 			pm.close();
 		}
 
+	}
+
+	public Reserva adicionarReserva(  long id,long idAlojamiento, Integer descuento,Integer personas,Integer precioTotal,Date fechaCheckIn,Date fechaCheckOut,Date fechaConfirmacion,Integer cantPagos,long idCliente)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long idServicio = nextval ();
+			long tuplasInsertadas = sqlReserva.adicionarReserva(pm, id, idAlojamiento, descuento, personas, precioTotal, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
+			tx.commit();
+
+			log.trace ("Inserción de reserva: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
+
+			return new Reserva(id, idAlojamiento, descuento, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return null;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
+
+
+	public long eliminarReservaPorId (long id) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			long resp = sqlReserva.eliminarReservaPorId(pm, id);
+			tx.commit();
+			return resp;
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			return -1;
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+
+
+	public List<Reserva> darReservas ()
+	{
+		return sqlReserva.darReservas (pmf.getPersistenceManager());
+	}
+
+
+
+
+	public Cliente darReservaPorId (long id)
+	{
+		return sqlCliente.darClientePorId (pmf.getPersistenceManager(), id);
 	}
 
 	public SQLReserva getSqlReserva() {

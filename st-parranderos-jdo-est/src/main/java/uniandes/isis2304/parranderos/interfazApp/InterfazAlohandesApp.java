@@ -1647,50 +1647,50 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     /* ****************************************************************
 	 * 			CRUD de Reserva
 	 *****************************************************************/
-//    /**
-//     * Adiciona un tipo de usuario con la información dada por el usuario
-//     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
-//     */
-//    public void adicionarReserva( )
-//    {
-//    	try 
-//    	{
-//			Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			Timestamp fechaConfirmacion = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de confirmacion", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			Integer cantPagos = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			Integer descuento = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			long idCliente = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			Integer precioTotal = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//			Integer personas = Integer.parseInt(JOptionPane.showInputDialog (this, "personas", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
-//
-//			
-//    		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
-//    		{
-//        		VOReserva tb = (VOReserva) alohandes.adicionarReserv
-//        		if (tb == null)
-//        		{
-//        			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
-//        		}
-//        		String resultado = "En adicionarReserva\n\n";
-//        		resultado += "Reserva adicionada exitosamente: " + tb;
-//    			resultado += "\n Operación terminada";
-//    			panelDatos.actualizarInterfaz(resultado);
-//    		}
-//    		else
-//    		{
-//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-//    		}
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
-//    }
+    /**
+     * Adiciona un tipo de usuario con la información dada por el usuario
+     * Se crea una nueva tupla de usuario en la base de datos, si un tipo de usuario con esa cedula no existía
+     */
+    public void adicionarReserva( )
+    {
+    	try 
+    	{
+			Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Timestamp fechaConfirmacion = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de confirmacion", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer cantPagos = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer descuento = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			long idCliente = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer precioTotal = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer personas = Integer.parseInt(JOptionPane.showInputDialog (this, "personas", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+
+			
+    		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
+    		{
+        		VOReserva tb = (VOReserva) alohandes.adicionarReserv
+        		if (tb == null)
+        		{
+        			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
+        		}
+        		String resultado = "En adicionarReserva\n\n";
+        		resultado += "Reserva adicionada exitosamente: " + tb;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
 //
 //    /**
 //     * Consulta en la base de datos los tipos de usuario existentes y los muestra en el panel de datos de la aplicación
