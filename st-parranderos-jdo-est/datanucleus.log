@@ -373,3 +373,18 @@ With the Partitioning, OLAP, Advanced Analytics and Real Application Testing opt
 09:57:10,273 (main) DEBUG [DataNucleus.Persistence] - ValueGeneration : txn-isolation=read-committed connection=New
 09:57:10,273 (main) DEBUG [DataNucleus.Persistence] - Cache : Level1 (soft), Level2 (soft, mode=UNSPECIFIED), QueryResults (soft), Collections/Maps 
 09:57:10,274 (main) DEBUG [DataNucleus.Persistence] - ================================================
+10:02:48,120 (AWT-EventQueue-0) DEBUG [DataNucleus.Persistence] - ExecutionContext OPENED "org.datanucleus.ExecutionContextImpl@14394d73" for datastore "org.datanucleus.store.rdbms.RDBMSStoreManager@1a8e7914" with txn="org.datanucleus.TransactionImpl@59ab9b6b"
+10:02:48,129 (AWT-EventQueue-0) DEBUG [DataNucleus.Transaction] - Transaction created [DataNucleus Transaction, ID=-622043501-1, enlisted resources=[]]
+10:02:48,130 (AWT-EventQueue-0) DEBUG [DataNucleus.Transaction] - Transaction begun for ExecutionContext org.datanucleus.ExecutionContextImpl@14394d73 (optimistic=false)
+10:02:48,131 (AWT-EventQueue-0) DEBUG [DataNucleus.Persistence] - ExecutionContext OPENED "org.datanucleus.ExecutionContextImpl@68b50213" for datastore "org.datanucleus.store.rdbms.RDBMSStoreManager@1a8e7914" with txn="org.datanucleus.TransactionImpl@db9828b"
+10:02:48,144 (AWT-EventQueue-0) DEBUG [DataNucleus.Query] - SQL Query : "SELECT null.nextval FROM DUAL"
+10:02:48,170 (AWT-EventQueue-0) DEBUG [DataNucleus.Connection] - ManagedConnection OPENED : "org.datanucleus.store.rdbms.ConnectionFactoryImpl$ManagedConnectionImpl@3aa574b4 [conn=org.datanucleus.store.rdbms.datasource.dbcp2.PoolingDataSource$PoolGuardConnectionWrapper@685ed1f9, commitOnRelease=true, closeOnRelease=true, closeOnTxnEnd=true]" on resource "nontx" with isolation level "read-committed" and auto-commit=false
+10:02:48,219 (AWT-EventQueue-0) DEBUG [DataNucleus.Datastore] - Using PreparedStatement "oracle.jdbc.driver.OraclePreparedStatementWrapper@309b6b4c" for connection "org.datanucleus.store.rdbms.datasource.dbcp2.PoolingDataSource$PoolGuardConnectionWrapper@685ed1f9"
+10:02:48,223 (AWT-EventQueue-0) DEBUG [DataNucleus.Datastore.Native] - SELECT null.nextval FROM DUAL
+10:02:48,248 (AWT-EventQueue-0) DEBUG [DataNucleus.Datastore] - Closing PreparedStatement "org.datanucleus.store.rdbms.ParamLoggingPreparedStatement@7518af35"
+10:02:48,250 (AWT-EventQueue-0) DEBUG [DataNucleus.Connection] - ManagedConnection COMMITTING : "org.datanucleus.store.rdbms.ConnectionFactoryImpl$ManagedConnectionImpl@3aa574b4 [conn=org.datanucleus.store.rdbms.datasource.dbcp2.PoolingDataSource$PoolGuardConnectionWrapper@685ed1f9, commitOnRelease=true, closeOnRelease=true, closeOnTxnEnd=true]"
+10:02:48,256 (AWT-EventQueue-0) DEBUG [DataNucleus.Connection] - ManagedConnection CLOSED : "org.datanucleus.store.rdbms.ConnectionFactoryImpl$ManagedConnectionImpl@3aa574b4 [conn=org.datanucleus.store.rdbms.datasource.dbcp2.PoolingDataSource$PoolGuardConnectionWrapper@685ed1f9, commitOnRelease=true, closeOnRelease=true, closeOnTxnEnd=true]"
+10:02:48,275 (AWT-EventQueue-0) DEBUG [DataNucleus.Transaction] - Transaction rolling back for ExecutionContext org.datanucleus.ExecutionContextImpl@14394d73
+10:02:48,278 (AWT-EventQueue-0) DEBUG [DataNucleus.Transaction] - Rolling back [DataNucleus Transaction, ID=-622043501-1, enlisted resources=[]]
+10:02:48,278 (AWT-EventQueue-0) DEBUG [DataNucleus.Transaction] - Transaction rolled back in 3 ms
+10:02:48,280 (AWT-EventQueue-0) DEBUG [DataNucleus.Persistence] - ExecutionContext CLOSED "org.datanucleus.ExecutionContextImpl@14394d73"

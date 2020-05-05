@@ -32,6 +32,12 @@ public abstract class Alojamiento implements VOAlojamiento
 	private String nombre;
 
 	private String tipoOferta;
+
+
+	private int habilitado;
+
+
+	private String servicios;
 	
 
 	
@@ -47,15 +53,19 @@ public abstract class Alojamiento implements VOAlojamiento
     	this.id = 0;
 		this.nombre = "";
 		this.tipoOferta = "";
+		this.setHabilitado(0);
+		this.setServicios("");
 
 	}
 
 	
-    public Alojamiento(long id, String nombre, String tipoOferta, String ubicacion) 
+    public Alojamiento(long id, String nombre, String tipoOferta, char habilitado, String servicios) 
     {
     	this.id = id;
 		this.nombre = nombre;
 		this.tipoOferta = tipoOferta;
+		this.habilitado = habilitado;
+		this.servicios = servicios;
 	}
 
     
@@ -97,19 +107,27 @@ public abstract class Alojamiento implements VOAlojamiento
 	}
 
 
-	
+	public String getServicios() {
+		return servicios;
+	}
+
+
+	public void setServicios(String servicios) {
+		this.servicios = servicios;
+	}
+
+
+	public int getHabilitado() {
+		return habilitado;
+	}
+
+
+	public void setHabilitado(int habilitado) {
+		this.habilitado = habilitado;
+	}
+
 
 	
-//	
-//	@Override
-//	/**
-//	 * @return Una cadena de caracteres con todos los atributos del bar
-//	 */
-//	public String toString() 
-//	{
-//		return "Alojamiento [id=" + id + ", nombre=" + nombre + ", tipoOferta=" + tipoOferta + ", tipo=" + tipo + ", ubicacion=" + ubicacion
-//				+ "]";
-//	}
-//	
+
 
 }
