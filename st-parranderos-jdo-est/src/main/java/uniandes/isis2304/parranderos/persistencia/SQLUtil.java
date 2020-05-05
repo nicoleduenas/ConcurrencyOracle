@@ -13,7 +13,7 @@
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
-package uniandes.isis2304.Alohandes.persistencia;
+package uniandes.isis2304.parranderos.persistencia;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;

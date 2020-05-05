@@ -1292,17 +1292,7 @@ public class Alohandes
 		return voEmpresas;
 	}
 
-	/**
-	 * Elimina las Empresas que no son servidas en ning√∫n bar (No son referenciadas en ninguna tupla de SIRVEN)
-	 * Adiciona entradas al log de la aplicaci√≥n
-	 * @return El n√∫mero de Empresas eliminadas
-	 */
-	public Empresa  darEmpresasPorNombre(String nombre)
-	{
-		log.info ("Buscando Empresa por nombre: " + nombre);
-		List<Empresa> tb = pp.darEmpresaPorNombre (nombre);
-		return !tb.isEmpty () ? tb.get (0) : null;
-	}
+	
 
 	public Empresa darEmpresasPorId(long id)
 	{

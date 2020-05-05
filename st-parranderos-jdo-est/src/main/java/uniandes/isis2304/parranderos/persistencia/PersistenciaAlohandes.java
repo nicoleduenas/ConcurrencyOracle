@@ -133,18 +133,18 @@ public class PersistenciaAlohandes
 		// Define los nombres por defecto de las tablas de la base de datos
 		tablas = new LinkedList<String> ();
 		tablas.add ("Parranderos_sequence");
-		tablas.add ("Cliente");
-		tablas.add ("Reserva");
-		tablas.add ("Alojamiento");
-		tablas.add ("Habitacion");
-		tablas.add ("ViviendaUniversitaria");
-		tablas.add ("AptoTemporada");
-		tablas.add ("Servicio");
-		tablas.add ("Hostal");
-		tablas.add ("Hotel");
-		tablas.add ("Proveedor");
-		tablas.add ("Empresa");
-		tablas.add ("Propietario");
+		tablas.add ("CLIENTE");
+		tablas.add ("RESERVA");
+		tablas.add ("ALOJAMIENTO");
+		tablas.add ("HABITACION");
+		tablas.add ("VIVIENDAUNIVERSITARIA");
+		tablas.add ("APTOTEMPORADA");
+		tablas.add ("SERVICIO");
+		tablas.add ("HOSTAL");
+		tablas.add ("HOTEL");
+		tablas.add ("PROVEEDOR");
+		tablas.add ("EMPRESA");
+		tablas.add ("PROPIETARIO");
 	}
 
 	/**
