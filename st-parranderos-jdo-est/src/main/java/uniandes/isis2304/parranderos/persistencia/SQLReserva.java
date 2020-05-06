@@ -32,11 +32,11 @@ public class SQLReserva {
 	}
 	
 	
-	public long adicionarReserva (PersistenceManager pm, long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+	public long adicionarReserva (PersistenceManager pm, long id, long idAlojamiento, Integer numeroReservaCol, Integer descuento, Integer personas, Integer precioTotal, 
 			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReserva () + "(id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente) values (?, ?, ?, ?, ?,?, ?, ?, ?, ?)");
-        q.setParameters(id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaReserva () + "(id, idAlojamiento,numeroReservaCol, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente) values (?, ?, ?, ?, ?,?, ?,?, ?, ?, ?)");
+        q.setParameters(id, idAlojamiento, numeroReservaCol,descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
         return (long) q.executeUnique();
 	}
 
@@ -82,6 +82,36 @@ public class SQLReserva {
 		return (List<Reserva>) q.executeList();
 	}
 
+	public List<Reserva> darReservaPorIdAlojamiento (PersistenceManager pm, long aloj) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaReserva () + " WHERE idAlojamiento = ?");
+		q.setResultClass(Reserva.class);
+		q.setParameters(aloj);
+		return (List<Reserva>) q.executeList();
+	}
+	
+	public List<Reserva> darReservasPorIdColectiva (PersistenceManager pm, long id) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaReserva () + " WHERE numeroReservaCol = ?");
+		q.setResultClass(Reserva.class);
+		q.setParameters(id);
+		return (List<Reserva>) q.executeList();
+	}
+	
+	public void desligarReservaPorIdMasiva (PersistenceManager pm, long idAlojamiento, long idMasiva)
+	{
+        Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaReserva () + "SET numeroReservaCol = 0" + "WHERE idAlojamiento = ?"+ "AND"+"numeroReservaCol = ?");
+        q.setParameters(idAlojamiento,idMasiva);
+       q.executeUnique();
+	}
+	
+	public void cambiarAlojamientoReserva (PersistenceManager pm, long id, long idAlojamiento)
+	{
+        Query q = pm.newQuery(SQL, "UPDATE " + pp.darTablaReserva () + "SET idAlojamiento = ?" + "WHERE id = ?");
+        q.setParameters(idAlojamiento,id);
+       q.executeUnique();
+	}
+	
 
 
 

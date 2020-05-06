@@ -218,6 +218,11 @@ public class Reserva implements VOReserva
 		return "Bebedor [id=" + id + ", idCliente=" + idCliente + ", idAlojamiento=" + idAlojamiento + ", precioTotal=" + precioTotal+ 
 				", descuento=" + descuento+ ", fechaCheckIn=" + fechaCheckIn + ", fechaCheckOut=" + fechaCheckOut+ "]";
 	}
+	
+	 
+    public int compareTo(Reserva o) { 
+    return getFechaConfirmacion().compareTo(o.getFechaConfirmacion()); 
+    } 
 
 	/**
 	 * @return Una cadena de caracteres con la información COMPLEtA del bebedor.
