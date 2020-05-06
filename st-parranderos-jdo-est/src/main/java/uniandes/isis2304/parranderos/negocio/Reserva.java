@@ -42,6 +42,8 @@ public class Reserva implements VOReserva
 	 */
 	private long precioTotal;
 	
+	private long numeroReservaCol;
+	
 	/**
 	 * La ciudad del bebedor
 	 */
@@ -66,6 +68,7 @@ public class Reserva implements VOReserva
 		this.fechaCheckOut= new Date();
 		this.fechaConfirmacion= new Date();
 		this.precioTotal= 0;
+		this.numeroReservaCol= 0;
 		this.setPersonas(0);
 
 
@@ -78,12 +81,13 @@ public class Reserva implements VOReserva
 	 * @param ciudad - La ciudad del bebedor
 	 * @param presupuesto - El presupuesto del bebedor (ALTO, MEDIO, BAJO)
 	 */
-	public Reserva(long id,long idCliente,long idAloja, Date fechaConfir, Date fechaCheckOut, Date fechaCheckIn, Integer personas, long precioTotal)
+	public Reserva(long id,long idCliente,long idAloja, long numeroReservaCol, Date fechaConfir, Date fechaCheckOut, Date fechaCheckIn, Integer personas, long precioTotal)
 	{
 		this.idCliente = idCliente;
 		this.idAlojamiento = idAloja;
 		this.id = id;
 		this.precioTotal= precioTotal;
+		this.numeroReservaCol= numeroReservaCol;
 		this.personas= personas;
 
 		this.fechaCheckIn= fechaCheckIn;
@@ -119,6 +123,21 @@ public class Reserva implements VOReserva
 	{
 		this.idCliente= idCliente;
 	}
+	
+	
+	public long getNumeroReservaCol() 
+	{
+		return numeroReservaCol;
+	}
+
+	/**
+	 * @param id - El nuevo id del bebedor
+	 */
+	public void setNumeroReservaCol(long numeroReservaCol) 
+	{
+		this.numeroReservaCol= numeroReservaCol;
+	}
+	
 	
 	public long getIdAlojamiento() 
 	{

@@ -17,6 +17,7 @@ package uniandes.isis2304.parranderos.persistencia;
 
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -1120,7 +1121,7 @@ public class PersistenciaAlohandes
 
 	}
 
-	public Reserva adicionarReserva(  long id,long idAlojamiento, Integer descuento,Integer personas,Integer precioTotal,Date fechaCheckIn,Date fechaCheckOut,Date fechaConfirmacion,Integer cantPagos,long idCliente)
+	public Reserva adicionarReserva(  long id,long idAlojamiento,  long numeroReservaCol,Integer descuento, Integer personas,Integer precioTotal,Date fechaCheckIn,Date fechaCheckOut,Date fechaConfirmacion,Integer cantPagos,long idCliente)
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx=pm.currentTransaction();
@@ -1128,12 +1129,12 @@ public class PersistenciaAlohandes
 		{
 			tx.begin();
 			long idServicio = nextval ();
-			long tuplasInsertadas = sqlReserva.adicionarReserva(pm, id, idAlojamiento, descuento, personas, precioTotal, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
+			long tuplasInsertadas = sqlReserva.adicionarReserva(pm, id, idAlojamiento,  numeroReservaCol,descuento, personas, precioTotal, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
 			tx.commit();
 
 			log.trace ("Inserción de reserva: " + id + ": " + tuplasInsertadas + " tuplas insertadas");
 
-			return new Reserva(id, idAlojamiento, descuento, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
+			return new Reserva(id, idAlojamiento, descuento, numeroReservaCol, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
 		}
 		catch (Exception e)
 		{
@@ -1190,9 +1191,9 @@ public class PersistenciaAlohandes
 
 
 
-	public Cliente darReservaPorId (long id)
+	public Reserva darReservaPorId (long id)
 	{
-		return sqlCliente.darClientePorId (pmf.getPersistenceManager(), id);
+		return sqlReserva.darReservaPorId (pmf.getPersistenceManager(), id);
 	}
 
 	public SQLReserva getSqlReserva() {
@@ -1221,6 +1222,75 @@ public class PersistenciaAlohandes
 
 	public String darSeqAlohandes() {
 		return null;
+	}
+
+	public List<Alojamiento> darAlojamientosPorTipo(String tipo) {
+		return sqlAlojamiento.darAlojamientosPorTipo (pmf.getPersistenceManager(), tipo);
+
+	}
+
+	public List<Reserva> darReservasPorIdColectiva( long id) {
+		return sqlReserva.darReservasPorIdColectiva (pmf.getPersistenceManager(), id);
+	}
+
+	public void cambiarAlojamientoReserva(long id, long idAlojamiento) 
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlReserva.cambiarAlojamientoReserva(pm, id, idAlojamiento);
+			tx.commit();
+			
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
+		
+	}
+
+	public List<Reserva> darReservasPorIdAlojamiento(long idAl) {
+		return sqlReserva.darReservasPorIdAlojamiento (pmf.getPersistenceManager(), idAl);
+
+	}
+
+	public void desligarReservaColectiva(long idAlojamiento, long numeroReservaCol)
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx=pm.currentTransaction();
+		try
+		{
+			tx.begin();
+			sqlReserva.desligarReservaPorIdMasiva(pm,  idAlojamiento,numeroReservaCol);
+			tx.commit();
+			
+		}
+		catch (Exception e)
+		{
+			//        	e.printStackTrace();
+			log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+			
+		}
+		finally
+		{
+			if (tx.isActive())
+			{
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
 
 

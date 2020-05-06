@@ -16,6 +16,9 @@
 package uniandes.isis2304.parranderos.negocio;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -763,21 +766,22 @@ public class Alohandes
 	 * @param gradoAlcohol - El grado de alcohol de la Alojamiento (Mayor que 0)
 	 * @return El objeto Alojamiento adicionado. null si ocurre alguna Excepci√≥n
 	 */
-	public Reserva adicionarReserva (long id, long idAlojamiento, Integer descuento, Integer personas, Integer precioTotal, 
+	public Reserva adicionarReserva (long id, long idAlojamiento, long numeroReservaCol,Integer descuento, Integer personas, Integer precioTotal, 
 			Date fechaCheckIn, Date fechaCheckOut,Date fechaConfirmacion, Integer cantPagos, long idCliente)
 	{
 		log.info ("Adicionando Reserva " );
-		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+		Reserva Reserva = pp.adicionarReserva (id, idAlojamiento, numeroReservaCol, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
 		log.info ("Adicionando Reserva: " + Reserva);
 		return Reserva;
 	}
-
-	/**
+/**
+	
 	 * Elimina una Reserva por su nombre
 	 * Adiciona entradas al log de la aplicaci√≥n
 	 * @param nombre - El nombre de la Reserva a eliminar
 	 * @return El n√∫mero de tuplas eliminadas
 	 */
+	/**
 	public long eliminarReservaPorCliente (long idCliente)
 	{
 		log.info ("Eliminando Reserva por cliente: " + idCliente);
@@ -785,7 +789,9 @@ public class Alohandes
 		log.info ("Eliminando Reserva por cliente: " + resp + " tuplas eliminadas");
 		return resp;
 	}
-
+	*/
+	
+	
 	/**
 	 * Elimina una Reserva por su identificador
 	 * Adiciona entradas al log de la aplicaci√≥n
@@ -835,12 +841,13 @@ public class Alohandes
 	 * Adiciona entradas al log de la aplicaci√≥n
 	 * @return El n√∫mero de Reservas eliminadas
 	 */
-	public Reserva  darReservasPorCliente(long cliente)
+	/**public Reserva  darReservasPorCliente(long cliente)
 	{
 		log.info ("Buscando Reserva por cliente: " + cliente);
 		List<Reserva> tb = pp.darReservaPorCliente (cliente);
 		return !tb.isEmpty () ? tb.get (0) : null;
 	}
+	*/
 
 	public Reserva darReservasPorId(long id)
 	{
@@ -926,8 +933,141 @@ public class Alohandes
 		return empresa;
 	}
 
+	public List<Alojamiento> darAlojamientosPorTipo (String tipo)
+	{
+		log.info ("Consultando Alojamientos");
+		List<Alojamiento> alojamientos = pp.darAlojamientosPorTipo (tipo);	
+		log.info ("Consultando Alojamientos: " + alojamientos.size() + " Alojamientos con tipo dado");
+		return alojamientos;
+	}
+		public boolean reqF7(int cant, String servicios, String tipo, Date fechaI, Date fechaF) 
+	{
+		ArrayList<Alojamiento> alojs = (ArrayList<Alojamiento>)darAlojamientosPorTipo(tipo.replace(" ", "").toUpperCase());
+		int numero=0;
+		String[] ar = servicios.split(",");
+		for(int i=0;ar.length>i;i++)
+		{
+			ar[i].replace(" ", "").toUpperCase();
 
+		}
+		int cont = 0;
+
+		while(cont <alojs.size())
+		{
+			if( estaDisponible(alojs.get(cont).getId(), fechaI, fechaF))
+			{
+				boolean valido=false;
+				String[] s = alojs.get(cont).getServicios().split(",");
+				for(int i=0;s.length>i && valido;i++)
+				{
+
+
+					s[i].replace(" ", "").toUpperCase();
+					for(int j=0;ar.length>j;j++)
+					{
+						if(s[i].equals(ar[j])) valido = true;
+					}
+				}
+				if(valido)numero++;
+
+			}
+
+			cont++;
+
+		}
+
+		if(numero>=cant)return true;
+
+		return false;
+	}
+
+	public ArrayList<Reserva> darReservasColectivasPorId(long idTipo) 
+	{
+		log.info ("Consultando Reservas");
+		ArrayList<Reserva> reservas = (ArrayList<Reserva>)pp.darReservasPorIdColectiva (idTipo);	
+		log.info ("Consultando Reservas: " + reservas.size() + " Reservas con el id colectiva");
+		return reservas;
+
+	}
+
+	public String desabilitarAlojamiento(Long id)
+	{
+		
+        String resp="";
+		List<Reserva> res = desligarReservasColectivas(id);
+		Collections.sort(res, new Comparator() {
+			public int compare(Object p1, Object p2) {
+				return (((Reserva) p1).getFechaConfirmacion()).compareTo((((Reserva) p2).getFechaConfirmacion()));
+			}});
+		Alojamiento al = darAlojamientosPorId(id);
+
+		List<Alojamiento> alojs = darAlojamientosPorTipo(al.getTipo());
+		int cont =0;
+		int cont1 =0;
+		while( res.size() > cont&&cont1<alojs.size())
+		{
+
+			while(res.size() > cont&&estaDisponible(alojs.get(cont1).getId(), res.get(cont).getFechaCheckIn(),res.get(cont).getFechaCheckOut() ))
+			{
+				
+				pp.cambiarAlojamientoReserva(res.get(cont).getId(), alojs.get(cont1).getId());
+				cont++;
+				resp+="se reubico la reserva: " + res.get(cont).getId() + "\n";
+			}
+			cont1++;
+
+		}
+		int faltantes = res.size()-cont;
+		while(faltantes>0)
+		{
+			resp+="no se reubico la reserva:" + res.get(res.size()-faltantes).getId() + "\n";
+			faltantes--;
+		}
+		
+		return resp;
+
+
+
+	}
 	
+	public boolean estaDisponible( long idAlojamiento, Date fecha, Date fechaF )
+	{
+		ArrayList<Reserva> reservas = (ArrayList<Reserva>)darReservasPorAlojamiento(idAlojamiento);
+		for( int i=0; i<reservas.size(); i++)
+		{
+			Date fechaI=reservas.get(i).getFechaCheckIn();
+			Date fechaOut=reservas.get(i).getFechaCheckOut();
+			if( fecha .after(fechaI) && fecha.before(fechaOut)&&fechaF.after(fechaI))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public List<Reserva>  darReservasPorAlojamiento(long aloj)
+	{
+		log.info ("Consultando Hostales");
+		List<Reserva> reservas = pp.darReservasPorIdAlojamiento (aloj);	
+		log.info ("Consultando Reservas: " + reservas.size() + " Reservas con el id de alojamiento");
+		return reservas;
+	}
+
+	public List<Reserva>  desligarReservasColectivas(long idAlojamiento)
+	{
+		ArrayList<Reserva> reservas = (ArrayList<Reserva>) darReservasPorAlojamiento(idAlojamiento);
+
+		for(int i=0; i< reservas.size(); i++)
+		{
+			if(reservas.get(i).getNumeroReservaCol()!=0)
+			{
+				pp.desligarReservaColectiva(idAlojamiento, reservas.get(i).getNumeroReservaCol());
+			}
+		}
+
+		return  darReservasPorAlojamiento(idAlojamiento);
+
+	}
 
 	/* ****************************************************************
 	 * 			M√©todos para administraci√≥n

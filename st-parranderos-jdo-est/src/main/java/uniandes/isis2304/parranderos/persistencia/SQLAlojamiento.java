@@ -79,6 +79,14 @@ public class SQLAlojamiento {
 		q.setResultClass(Alojamiento.class);
 		return (List<Alojamiento>) q.executeList();
 	}
+	
+	public List<Alojamiento> darAlojamientosPorTipo (PersistenceManager pm, String tipo)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaAlojamiento () + " WHERE tipo = ?");
+		q.setResultClass(Alojamiento.class);
+		q.setParameters(tipo);
+		return (List<Alojamiento>) q.executeList();
+	}
 
 
 

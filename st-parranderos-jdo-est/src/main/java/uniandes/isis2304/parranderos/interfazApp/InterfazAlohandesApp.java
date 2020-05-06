@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +57,7 @@ import uniandes.isis2304.parranderos.negocio.VOHostal;
 import uniandes.isis2304.parranderos.negocio.VOHotel;
 import uniandes.isis2304.parranderos.negocio.VOEmpresa;
 import uniandes.isis2304.parranderos.negocio.VOProveedor;
+import uniandes.isis2304.parranderos.negocio.VOReserva;
 import uniandes.isis2304.parranderos.negocio.VOAlojamiento;
 import uniandes.isis2304.parranderos.negocio.VOCliente;
 import uniandes.isis2304.parranderos.negocio.ViviendaUniversitaria;
@@ -1669,7 +1672,7 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 			
     		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
     		{
-        		VOReserva tb = (VOReserva) alohandes.adicionarReserv
+        		VOReserva tb = (VOReserva) alohandes.adicionarReserva(id, idAlojamiento, 0, descuento, personas, precioTotal, fechaCheckIn, fechaCheckOut, fechaConfirmacion, cantPagos, idCliente);
         		if (tb == null)
         		{
         			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
@@ -1682,6 +1685,47 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
     		else
     		{
     			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
+    
+    public void adicionarReservaColectiva(Integer numero )
+    {
+    	try 
+    	{
+			Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Timestamp fechaConfirmacion = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de confirmacion", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			long id = Long.parseLong(JOptionPane.showInputDialog (this, "id", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer cantPagos = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer descuento = Integer.parseInt(JOptionPane.showInputDialog (this, "Presta administracion??", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			long idCliente = Long.parseLong(JOptionPane.showInputDialog (this, "idProveedor", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+    		long idAlojamiento = Long.parseLong(JOptionPane.showInputDialog (this, "idAlojamiento", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer precioTotal = Integer.parseInt(JOptionPane.showInputDialog (this, "precio", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+			Integer personas = Integer.parseInt(JOptionPane.showInputDialog (this, "personas", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+
+			
+    		if (id >0 & fechaCheckIn!= null& fechaCheckOut!= null& fechaConfirmacion!= null & idCliente>0& idAlojamiento>0)
+    		{
+        		VOReserva tb = (VOReserva) alohandes.adicionarReserva(id, idAlojamiento, numero, descuento, personas, precioTotal,fechaCheckIn,fechaCheckOut,fechaConfirmacion, cantPagos, idCliente);
+        		if (tb == null)
+        		{
+        			throw new Exception ("No se pudo crear una reserva para el usuario: " + idCliente);
+        		}
+        		String resultado = "En adicionarReserva\n\n";
+        		resultado += "Reserva adicionada exitosamente: " + tb;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el error del usuario");
     		}
 		} 
     	catch (Exception e) 
@@ -1718,33 +1762,58 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 //     * Borra de la base de datos el tipo de bebida con el identificador dado po el usuario
 //     * Cuando dicho tipo de bebida no existe, se indica que se borraron 0 registros de la base de datos
 //     */
-//    public void eliminarReservaPorId( )
-//    {
-//    	try 
-//    	{
-//    		String idTipoStr = JOptionPane.showInputDialog (this, "Id de la reserva?", "Borrar reserva por Id", JOptionPane.QUESTION_MESSAGE);
-//    		if (idTipoStr != null)
-//    		{
-//    			long idTipo = Long.valueOf (idTipoStr);
-//    			long tbEliminados = alohandes.eliminarReservaPorId(idTipo);
-//
-//    			String resultado = "En eliminar Reserva\n\n";
-//    			resultado += tbEliminados + " Reserva eliminadas\n";
-//    			resultado += "\n Operación terminada";
-//    			panelDatos.actualizarInterfaz(resultado);
-//    		}
-//    		else
-//    		{
-//    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
-//    		}
-//		} 
-//    	catch (Exception e) 
-//    	{
-////			e.printStackTrace();
-//			String resultado = generarMensajeError(e);
-//			panelDatos.actualizarInterfaz(resultado);
-//		}
-//    }
+//    /**
+
+    public void eliminarReservaPorId( )
+    {
+    	try 
+    	{
+    		String idTipoStr = JOptionPane.showInputDialog (this, "Id de la reserva?", "Borrar reserva por Id", JOptionPane.QUESTION_MESSAGE);
+    		if (idTipoStr != null)
+    		{
+    			
+
+    			long idTipo = Long.valueOf (idTipoStr);
+    			Reserva reserva= alohandes.darReservasPorId(idTipo);
+    			double multa = 0;
+    			Date date= new Date();
+    			Calendar hoy = Calendar.getInstance();
+    			Calendar c1 = Calendar.getInstance();
+    			c1.set(reserva.getFechaConfirmacion( ).getYear(), reserva.getFechaConfirmacion( ).getMonth(), reserva.getFechaConfirmacion( ).getDate()); 
+    			c1.add(Calendar.DATE, 3);
+
+    			if( hoy.before(c1)|  hoy.equals(c1))
+    			{
+    				multa =  reserva.getPrecioTotal( )* 0.1;
+    			}
+    			else if(date.before(reserva.getFechaCheckIn( ))|date.equals(reserva.getFechaCheckIn( )))
+    			{
+    				multa =  reserva.getPrecioTotal( )* 0.3;
+    			}
+    			else if(date.before(reserva.getFechaCheckIn( ))|date.equals(reserva.getFechaCheckIn( )))
+    			{
+    				multa =  reserva.getPrecioTotal( )* 0.3;
+    			}
+    			long tbEliminados = alohandes.eliminarReservaPorId(idTipo);
+
+    			String resultado = "En eliminar Reserva\n\n";
+    			resultado += tbEliminados + " Reserva eliminada\n";
+    			resultado += "La multa a pagar es" + multa;
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
 //
 //    /**
 //     * Busca el usuario con el nombre indicado por el usuario y lo muestra en el panel de datos
@@ -2164,10 +2233,105 @@ public class InterfazAlohandesApp extends JFrame implements ActionListener
 		}
     }
     
-    
+    public void reqF7( )
+    {
+   	try
+    {
+		String servicios = (JOptionPane.showInputDialog (this, "servicios", "reqF7", JOptionPane.QUESTION_MESSAGE));
+		int cant = Integer.parseInt(JOptionPane.showInputDialog (this, "cantidad alojamientos requeridos", "reqF7", JOptionPane.QUESTION_MESSAGE));
+		String tipo = (JOptionPane.showInputDialog (this, "servicios", "reqF7", JOptionPane.QUESTION_MESSAGE));
+		Timestamp fechaCheckIn = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de llegada", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+		Timestamp fechaCheckOut = Timestamp.valueOf(JOptionPane.showInputDialog (this, "fecha y hora de salida", "Adicionar Reserva", JOptionPane.QUESTION_MESSAGE));
+
+    		
+    	boolean tb = alohandes.reqF7(cant, servicios, tipo, fechaCheckIn, fechaCheckOut);
+		if (tb)
+		{
+			throw new Exception ("No se encontro la cantidad de alojamientos disponibles requerida");
+		}
+		String resultado = "En reqF7\n\n";
+		resultado += "Se encontraron alojamientos disponibles para su solicitud"
+				+ ", a continuación se solicitara el registro de las correspondientes reservas: ";
+		resultado += "\n Operación terminada";
+		panelDatos.actualizarInterfaz(resultado);
+		Integer numeroReservaCol= Integer.parseInt(JOptionPane.showInputDialog (this, "ingrese el numero de la reserva colectiva (debe ser mayor a 0)", "reqF7", JOptionPane.QUESTION_MESSAGE));
+
+		int cont = 0;
+		
+		while( cont != cant )
+		{
+			adicionarReservaColectiva(numeroReservaCol);
+			cont++;
+		}
+	
+
+} 
+catch (Exception e) 
+{
+//	e.printStackTrace();
+	String resultado = generarMensajeError(e);
+	panelDatos.actualizarInterfaz(resultado);
+}
+    	 
+    }
    
     
+     public void cancelarReservaMasiva( )
+    {
+    	try 
+    	{
+    		String idTipoStr = JOptionPane.showInputDialog (this, "Id de la reserva colectiva?", "Borrar reserva por Id", JOptionPane.QUESTION_MESSAGE);
+    		if (idTipoStr != null)
+    		{
+    			long idTipo = Long.valueOf (idTipoStr);
+
+    			ArrayList<Reserva> re = alohandes.darReservasColectivasPorId(idTipo);
+    			
+    			int cont = 0;
+    			while(cont<re.size())
+    			{
+        			long tbEliminados = alohandes.eliminarReservaPorId(re.get(cont).getId());
+    			}
+
+    			String resultado = "En eliminar Reserva Masiva\n\n";
+    			resultado += re.size() + " Reservas eliminadas\n";
+    			resultado += "\n Operación terminada";
+    			panelDatos.actualizarInterfaz(resultado);
+    		}
+    		else
+    		{
+    			panelDatos.actualizarInterfaz("Operación cancelada por el usuario");
+    		}
+		} 
+    	catch (Exception e) 
+    	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+    }
     
+    
+   public void desabilitarAlojamiento( )
+   {
+	   try 
+   	{
+   		Long id = Long.parseLong(JOptionPane.showInputDialog (this, "id del del alojamiento?", "Buscar reserva por usuario", JOptionPane.QUESTION_MESSAGE));
+
+			String lista = alohandes.desabilitarAlojamiento(id);
+
+			String resultado = "Se deshabilito el alojamiento";
+			resultado +=  "\n" +  "se reasignaron" + lista +"reservas";
+			panelDatos.actualizarInterfaz(lista.concat(resultado));
+			resultado += "\n Operación terminada";
+		} 
+   	catch (Exception e) 
+   	{
+//			e.printStackTrace();
+			String resultado = generarMensajeError(e);
+			panelDatos.actualizarInterfaz(resultado);
+		}
+   }
 
     
     
